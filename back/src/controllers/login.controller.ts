@@ -1,13 +1,15 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const User = require('../models/User')
+import { jwt } from 'jsonwebtoken'
+import { bcrypt } from 'bcrypt'
+import { prismaClient as prisma } from '../prismaClient'
+
+
 
 async function loginUser(request, response) {
     const { body } = request
     console.log('loginUser en controller', body)
     const { username, password } = body
 
-    const user = await User.findOne({ username })
+    const user = await prisma.user.findOne({ username })
 
     const passwordCorrect = user === null
         ? false

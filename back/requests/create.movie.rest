@@ -1,0 +1,11 @@
+POST http://localhost:3333/api/movies
+Content-Type: application/json
+
+{
+  "title": "Cars 4",
+  "description": "The epic comeback of Lightning Mcqueen",
+  "releaseYear": 2025,
+  "poster_img": "huig",
+  "genre": "Action",
+  "score": 3.6
+}

@@ -4,6 +4,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "seriesId" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -15,7 +16,9 @@ CREATE TABLE "Movie" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "releaseYear" INTEGER NOT NULL,
-    "categoryId" INTEGER,
+    "poster_img" TEXT NOT NULL,
+    "genresId" INTEGER,
+    "score" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Movie_pkey" PRIMARY KEY ("id")
 );
@@ -26,17 +29,19 @@ CREATE TABLE "Series" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "releaseYear" INTEGER NOT NULL,
-    "categoryId" INTEGER,
+    "poster_img" TEXT NOT NULL,
+    "genresId" INTEGER,
+    "score" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "Series_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Category" (
+CREATE TABLE "Genres" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
 
-    CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Genres_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -55,7 +60,7 @@ CREATE TABLE "_UserLikedSeries" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+CREATE UNIQUE INDEX "Genres_name_key" ON "Genres"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_UserLikedMovies_AB_unique" ON "_UserLikedMovies"("A", "B");
@@ -70,10 +75,10 @@ CREATE UNIQUE INDEX "_UserLikedSeries_AB_unique" ON "_UserLikedSeries"("A", "B")
 CREATE INDEX "_UserLikedSeries_B_index" ON "_UserLikedSeries"("B");
 
 -- AddForeignKey
-ALTER TABLE "Movie" ADD CONSTRAINT "Movie_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Movie" ADD CONSTRAINT "Movie_genresId_fkey" FOREIGN KEY ("genresId") REFERENCES "Genres"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Series" ADD CONSTRAINT "Series_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Series" ADD CONSTRAINT "Series_genresId_fkey" FOREIGN KEY ("genresId") REFERENCES "Genres"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_UserLikedMovies" ADD CONSTRAINT "_UserLikedMovies_A_fkey" FOREIGN KEY ("A") REFERENCES "Movie"("id") ON DELETE CASCADE ON UPDATE CASCADE;

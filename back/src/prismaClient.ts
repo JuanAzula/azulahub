@@ -23,6 +23,6 @@ if (DATA_SOURCE === "postgres") {
     const connectionString = `${process.env.MONGO_URL}`
     const pool = new Pool({ connectionString })
     const adapter = new PrismaPg(pool)
-    const mongoClient = new MongoClient({ adapter });
+    const mongoClient = new MongoClient();
     prismaClient = mongoClient
 }

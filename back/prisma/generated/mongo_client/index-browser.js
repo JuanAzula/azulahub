@@ -127,9 +127,8 @@ exports.Prisma.MovieScalarFieldEnum = {
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genresId: 'genresId',
-  score: 'score',
-  userId: 'userId'
+  genre: 'genre',
+  score: 'score'
 };
 
 exports.Prisma.SeriesScalarFieldEnum = {
