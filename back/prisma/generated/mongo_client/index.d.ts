@@ -1094,39 +1094,6 @@ export namespace Prisma {
    */
 
 
-  /**
-   * Count Type GenreCountOutputType
-   */
-
-  export type GenreCountOutputType = {
-    series: number
-  }
-
-  export type GenreCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | GenreCountOutputTypeCountSeriesArgs
-  }
-
-  // Custom InputTypes
-
-  /**
-   * GenreCountOutputType without action
-   */
-  export type GenreCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the GenreCountOutputType
-     */
-    select?: GenreCountOutputTypeSelect<ExtArgs> | null
-  }
-
-
-  /**
-   * GenreCountOutputType without action
-   */
-  export type GenreCountOutputTypeCountSeriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SeriesWhereInput
-  }
-
-
 
   /**
    * Models
@@ -1138,18 +1105,8 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
-  }
-
-  export type UserAvgAggregateOutputType = {
-    seriesId: number | null
-  }
-
-  export type UserSumAggregateOutputType = {
-    seriesId: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1158,7 +1115,6 @@ export namespace Prisma {
     password: string | null
     name: string | null
     lastName: string | null
-    seriesId: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1167,7 +1123,6 @@ export namespace Prisma {
     password: string | null
     name: string | null
     lastName: string | null
-    seriesId: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1176,18 +1131,9 @@ export namespace Prisma {
     password: number
     name: number
     lastName: number
-    seriesId: number
     _all: number
   }
 
-
-  export type UserAvgAggregateInputType = {
-    seriesId?: true
-  }
-
-  export type UserSumAggregateInputType = {
-    seriesId?: true
-  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -1195,7 +1141,6 @@ export namespace Prisma {
     password?: true
     name?: true
     lastName?: true
-    seriesId?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1204,7 +1149,6 @@ export namespace Prisma {
     password?: true
     name?: true
     lastName?: true
-    seriesId?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1213,7 +1157,6 @@ export namespace Prisma {
     password?: true
     name?: true
     lastName?: true
-    seriesId?: true
     _all?: true
   }
 
@@ -1255,18 +1198,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -1297,8 +1228,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
-    _avg?: UserAvgAggregateInputType
-    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -1309,10 +1238,7 @@ export namespace Prisma {
     password: string
     name: string
     lastName: string
-    seriesId: number | null
     _count: UserCountAggregateOutputType | null
-    _avg: UserAvgAggregateOutputType | null
-    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -1337,8 +1263,6 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     lastName?: boolean
-    seriesId?: boolean
-    Series?: boolean | User$SeriesArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1347,26 +1271,18 @@ export namespace Prisma {
     password?: boolean
     name?: boolean
     lastName?: boolean
-    seriesId?: boolean
-  }
-
-  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Series?: boolean | User$SeriesArgs<ExtArgs>
   }
 
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {
-      Series: Prisma.$SeriesPayload<ExtArgs> | null
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
       password: string
       name: string
       lastName: string
-      seriesId: number | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1759,7 +1675,6 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    Series<T extends User$SeriesArgs<ExtArgs> = {}>(args?: Subset<T, User$SeriesArgs<ExtArgs>>): Prisma__SeriesClient<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1794,7 +1709,6 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
-    readonly seriesId: FieldRef<"User", 'Int'>
   }
     
 
@@ -1808,10 +1722,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1828,10 +1738,6 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -1846,10 +1752,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -1896,10 +1798,6 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -1945,10 +1843,6 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -1989,10 +1883,6 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -2018,10 +1908,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -2057,10 +1943,6 @@ export namespace Prisma {
      */
     select?: UserSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    /**
      * The filter to search for the User to update in case it exists.
      */
     where: UserWhereUniqueInput
@@ -2083,10 +1965,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
     /**
      * Filter which User to delete.
      */
@@ -2136,22 +2014,6 @@ export namespace Prisma {
 
 
   /**
-   * User.Series
-   */
-  export type User$SeriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Series
-     */
-    select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    where?: SeriesWhereInput
-  }
-
-
-  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2159,10 +2021,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the User
      */
     select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -3181,9 +3039,8 @@ export namespace Prisma {
     description: string | null
     releaseYear: number | null
     poster_img: string | null
-    genresId: string | null
+    genre: string | null
     score: number | null
-    userId: string | null
   }
 
   export type SeriesMaxAggregateOutputType = {
@@ -3192,9 +3049,8 @@ export namespace Prisma {
     description: string | null
     releaseYear: number | null
     poster_img: string | null
-    genresId: string | null
+    genre: string | null
     score: number | null
-    userId: string | null
   }
 
   export type SeriesCountAggregateOutputType = {
@@ -3203,9 +3059,8 @@ export namespace Prisma {
     description: number
     releaseYear: number
     poster_img: number
-    genresId: number
+    genre: number
     score: number
-    userId: number
     _all: number
   }
 
@@ -3226,9 +3081,8 @@ export namespace Prisma {
     description?: true
     releaseYear?: true
     poster_img?: true
-    genresId?: true
+    genre?: true
     score?: true
-    userId?: true
   }
 
   export type SeriesMaxAggregateInputType = {
@@ -3237,9 +3091,8 @@ export namespace Prisma {
     description?: true
     releaseYear?: true
     poster_img?: true
-    genresId?: true
+    genre?: true
     score?: true
-    userId?: true
   }
 
   export type SeriesCountAggregateInputType = {
@@ -3248,9 +3101,8 @@ export namespace Prisma {
     description?: true
     releaseYear?: true
     poster_img?: true
-    genresId?: true
+    genre?: true
     score?: true
-    userId?: true
     _all?: true
   }
 
@@ -3346,9 +3198,8 @@ export namespace Prisma {
     description: string
     releaseYear: number
     poster_img: string
-    genresId: string | null
+    genre: string
     score: number
-    userId: string | null
     _count: SeriesCountAggregateOutputType | null
     _avg: SeriesAvgAggregateOutputType | null
     _sum: SeriesSumAggregateOutputType | null
@@ -3376,11 +3227,8 @@ export namespace Prisma {
     description?: boolean
     releaseYear?: boolean
     poster_img?: boolean
-    genresId?: boolean
+    genre?: boolean
     score?: boolean
-    userId?: boolean
-    genre?: boolean | Series$genreArgs<ExtArgs>
-    User?: boolean | Series$UserArgs<ExtArgs>
   }, ExtArgs["result"]["series"]>
 
   export type SeriesSelectScalar = {
@@ -3389,32 +3237,22 @@ export namespace Prisma {
     description?: boolean
     releaseYear?: boolean
     poster_img?: boolean
-    genresId?: boolean
+    genre?: boolean
     score?: boolean
-    userId?: boolean
-  }
-
-  export type SeriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    genre?: boolean | Series$genreArgs<ExtArgs>
-    User?: boolean | Series$UserArgs<ExtArgs>
   }
 
 
   export type $SeriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Series"
-    objects: {
-      genre: Prisma.$GenrePayload<ExtArgs> | null
-      User: Prisma.$UserPayload<ExtArgs> | null
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       description: string
       releaseYear: number
       poster_img: string
-      genresId: string | null
+      genre: string
       score: number
-      userId: string | null
     }, ExtArgs["result"]["series"]>
     composites: {}
   }
@@ -3807,9 +3645,6 @@ export namespace Prisma {
   export interface Prisma__SeriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    genre<T extends Series$genreArgs<ExtArgs> = {}>(args?: Subset<T, Series$genreArgs<ExtArgs>>): Prisma__GenreClient<$Result.GetResult<Prisma.$GenrePayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
-
-    User<T extends Series$UserArgs<ExtArgs> = {}>(args?: Subset<T, Series$UserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3844,9 +3679,8 @@ export namespace Prisma {
     readonly description: FieldRef<"Series", 'String'>
     readonly releaseYear: FieldRef<"Series", 'Int'>
     readonly poster_img: FieldRef<"Series", 'String'>
-    readonly genresId: FieldRef<"Series", 'String'>
+    readonly genre: FieldRef<"Series", 'String'>
     readonly score: FieldRef<"Series", 'Float'>
-    readonly userId: FieldRef<"Series", 'String'>
   }
     
 
@@ -3860,10 +3694,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Series
      */
     select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
     /**
      * Filter, which Series to fetch.
      */
@@ -3880,10 +3710,6 @@ export namespace Prisma {
      */
     select?: SeriesSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    /**
      * Filter, which Series to fetch.
      */
     where: SeriesWhereUniqueInput
@@ -3898,10 +3724,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Series
      */
     select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
     /**
      * Filter, which Series to fetch.
      */
@@ -3948,10 +3770,6 @@ export namespace Prisma {
      */
     select?: SeriesSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    /**
      * Filter, which Series to fetch.
      */
     where?: SeriesWhereInput
@@ -3997,10 +3815,6 @@ export namespace Prisma {
      */
     select?: SeriesSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    /**
      * Filter, which Series to fetch.
      */
     where?: SeriesWhereInput
@@ -4041,10 +3855,6 @@ export namespace Prisma {
      */
     select?: SeriesSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    /**
      * The data needed to create a Series.
      */
     data: XOR<SeriesCreateInput, SeriesUncheckedCreateInput>
@@ -4070,10 +3880,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Series
      */
     select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
     /**
      * The data needed to update a Series.
      */
@@ -4109,10 +3915,6 @@ export namespace Prisma {
      */
     select?: SeriesSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    /**
      * The filter to search for the Series to update in case it exists.
      */
     where: SeriesWhereUniqueInput
@@ -4135,10 +3937,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Series
      */
     select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
     /**
      * Filter which Series to delete.
      */
@@ -4188,38 +3986,6 @@ export namespace Prisma {
 
 
   /**
-   * Series.genre
-   */
-  export type Series$genreArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Genre
-     */
-    select?: GenreSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    where?: GenreWhereInput
-  }
-
-
-  /**
-   * Series.User
-   */
-  export type Series$UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-
-  /**
    * Series without action
    */
   export type SeriesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4227,10 +3993,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Series
      */
     select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
   }
 
 
@@ -4375,8 +4137,6 @@ export namespace Prisma {
   export type GenreSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    series?: boolean | Genre$seriesArgs<ExtArgs>
-    _count?: boolean | GenreCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["genre"]>
 
   export type GenreSelectScalar = {
@@ -4384,17 +4144,10 @@ export namespace Prisma {
     name?: boolean
   }
 
-  export type GenreInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    series?: boolean | Genre$seriesArgs<ExtArgs>
-    _count?: boolean | GenreCountOutputTypeDefaultArgs<ExtArgs>
-  }
-
 
   export type $GenrePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Genre"
-    objects: {
-      series: Prisma.$SeriesPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
@@ -4790,7 +4543,6 @@ export namespace Prisma {
   export interface Prisma__GenreClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    series<T extends Genre$seriesArgs<ExtArgs> = {}>(args?: Subset<T, Genre$seriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeriesPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4836,10 +4588,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * Filter, which Genre to fetch.
      */
     where: GenreWhereUniqueInput
@@ -4855,10 +4603,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * Filter, which Genre to fetch.
      */
     where: GenreWhereUniqueInput
@@ -4873,10 +4617,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Genre
      */
     select?: GenreSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
     /**
      * Filter, which Genre to fetch.
      */
@@ -4923,10 +4663,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * Filter, which Genre to fetch.
      */
     where?: GenreWhereInput
@@ -4972,10 +4708,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * Filter, which Genres to fetch.
      */
     where?: GenreWhereInput
@@ -5016,10 +4748,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * The data needed to create a Genre.
      */
     data: XOR<GenreCreateInput, GenreUncheckedCreateInput>
@@ -5045,10 +4773,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Genre
      */
     select?: GenreSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
     /**
      * The data needed to update a Genre.
      */
@@ -5084,10 +4808,6 @@ export namespace Prisma {
      */
     select?: GenreSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
-    /**
      * The filter to search for the Genre to update in case it exists.
      */
     where: GenreWhereUniqueInput
@@ -5110,10 +4830,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Genre
      */
     select?: GenreSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
     /**
      * Filter which Genre to delete.
      */
@@ -5163,27 +4879,6 @@ export namespace Prisma {
 
 
   /**
-   * Genre.series
-   */
-  export type Genre$seriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Series
-     */
-    select?: SeriesSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: SeriesInclude<ExtArgs> | null
-    where?: SeriesWhereInput
-    orderBy?: SeriesOrderByWithRelationInput | SeriesOrderByWithRelationInput[]
-    cursor?: SeriesWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SeriesScalarFieldEnum | SeriesScalarFieldEnum[]
-  }
-
-
-  /**
    * Genre without action
    */
   export type GenreDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5191,10 +4886,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the Genre
      */
     select?: GenreSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well.
-     */
-    include?: GenreInclude<ExtArgs> | null
   }
 
 
@@ -5208,8 +4899,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     name: 'name',
-    lastName: 'lastName',
-    seriesId: 'seriesId'
+    lastName: 'lastName'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -5234,9 +4924,8 @@ export namespace Prisma {
     description: 'description',
     releaseYear: 'releaseYear',
     poster_img: 'poster_img',
-    genresId: 'genresId',
-    score: 'score',
-    userId: 'userId'
+    genre: 'genre',
+    score: 'score'
   };
 
   export type SeriesScalarFieldEnum = (typeof SeriesScalarFieldEnum)[keyof typeof SeriesScalarFieldEnum]
@@ -5325,8 +5014,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
-    seriesId?: IntNullableFilter<"User"> | number | null
-    Series?: XOR<SeriesNullableRelationFilter, SeriesWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -5335,22 +5022,18 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     lastName?: SortOrder
-    seriesId?: SortOrder
-    Series?: SeriesOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    seriesId?: number
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
-    Series?: XOR<SeriesNullableRelationFilter, SeriesWhereInput> | null
-  }, "id" | "email" | "seriesId">
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -5358,12 +5041,9 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     lastName?: SortOrder
-    seriesId?: SortOrder
     _count?: UserCountOrderByAggregateInput
-    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
-    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -5375,7 +5055,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
-    seriesId?: IntNullableWithAggregatesFilter<"User"> | number | null
   }
 
   export type MovieWhereInput = {
@@ -5451,11 +5130,8 @@ export namespace Prisma {
     description?: StringFilter<"Series"> | string
     releaseYear?: IntFilter<"Series"> | number
     poster_img?: StringFilter<"Series"> | string
-    genresId?: StringNullableFilter<"Series"> | string | null
+    genre?: StringFilter<"Series"> | string
     score?: FloatFilter<"Series"> | number
-    userId?: StringNullableFilter<"Series"> | string | null
-    genre?: XOR<GenreNullableRelationFilter, GenreWhereInput> | null
-    User?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }
 
   export type SeriesOrderByWithRelationInput = {
@@ -5464,17 +5140,12 @@ export namespace Prisma {
     description?: SortOrder
     releaseYear?: SortOrder
     poster_img?: SortOrder
-    genresId?: SortOrder
+    genre?: SortOrder
     score?: SortOrder
-    userId?: SortOrder
-    genre?: GenreOrderByWithRelationInput
-    User?: UserOrderByWithRelationInput
   }
 
   export type SeriesWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    genresId?: string
-    userId?: string
     AND?: SeriesWhereInput | SeriesWhereInput[]
     OR?: SeriesWhereInput[]
     NOT?: SeriesWhereInput | SeriesWhereInput[]
@@ -5482,10 +5153,9 @@ export namespace Prisma {
     description?: StringFilter<"Series"> | string
     releaseYear?: IntFilter<"Series"> | number
     poster_img?: StringFilter<"Series"> | string
+    genre?: StringFilter<"Series"> | string
     score?: FloatFilter<"Series"> | number
-    genre?: XOR<GenreNullableRelationFilter, GenreWhereInput> | null
-    User?: XOR<UserNullableRelationFilter, UserWhereInput> | null
-  }, "id" | "genresId" | "userId">
+  }, "id">
 
   export type SeriesOrderByWithAggregationInput = {
     id?: SortOrder
@@ -5493,9 +5163,8 @@ export namespace Prisma {
     description?: SortOrder
     releaseYear?: SortOrder
     poster_img?: SortOrder
-    genresId?: SortOrder
+    genre?: SortOrder
     score?: SortOrder
-    userId?: SortOrder
     _count?: SeriesCountOrderByAggregateInput
     _avg?: SeriesAvgOrderByAggregateInput
     _max?: SeriesMaxOrderByAggregateInput
@@ -5512,9 +5181,8 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"Series"> | string
     releaseYear?: IntWithAggregatesFilter<"Series"> | number
     poster_img?: StringWithAggregatesFilter<"Series"> | string
-    genresId?: StringNullableWithAggregatesFilter<"Series"> | string | null
+    genre?: StringWithAggregatesFilter<"Series"> | string
     score?: FloatWithAggregatesFilter<"Series"> | number
-    userId?: StringNullableWithAggregatesFilter<"Series"> | string | null
   }
 
   export type GenreWhereInput = {
@@ -5523,13 +5191,11 @@ export namespace Prisma {
     NOT?: GenreWhereInput | GenreWhereInput[]
     id?: StringFilter<"Genre"> | string
     name?: StringFilter<"Genre"> | string
-    series?: SeriesListRelationFilter
   }
 
   export type GenreOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    series?: SeriesOrderByRelationAggregateInput
   }
 
   export type GenreWhereUniqueInput = Prisma.AtLeast<{
@@ -5538,7 +5204,6 @@ export namespace Prisma {
     AND?: GenreWhereInput | GenreWhereInput[]
     OR?: GenreWhereInput[]
     NOT?: GenreWhereInput | GenreWhereInput[]
-    series?: SeriesListRelationFilter
   }, "id" | "name">
 
   export type GenreOrderByWithAggregationInput = {
@@ -5563,8 +5228,6 @@ export namespace Prisma {
     password: string
     name: string
     lastName: string
-    seriesId?: number | null
-    Series?: SeriesCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -5573,8 +5236,6 @@ export namespace Prisma {
     password: string
     name: string
     lastName: string
-    seriesId?: number | null
-    Series?: SeriesUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -5582,8 +5243,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
-    Series?: SeriesUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -5591,8 +5250,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
-    Series?: SeriesUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -5601,7 +5258,6 @@ export namespace Prisma {
     password: string
     name: string
     lastName: string
-    seriesId?: number | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -5609,7 +5265,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -5617,7 +5272,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MovieCreateInput = {
@@ -5692,9 +5346,8 @@ export namespace Prisma {
     description: string
     releaseYear: number
     poster_img: string
+    genre: string
     score: number
-    genre?: GenreCreateNestedOneWithoutSeriesInput
-    User?: UserCreateNestedOneWithoutSeriesInput
   }
 
   export type SeriesUncheckedCreateInput = {
@@ -5703,9 +5356,8 @@ export namespace Prisma {
     description: string
     releaseYear: number
     poster_img: string
-    genresId?: string | null
+    genre: string
     score: number
-    userId?: string | null
   }
 
   export type SeriesUpdateInput = {
@@ -5713,9 +5365,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     releaseYear?: IntFieldUpdateOperationsInput | number
     poster_img?: StringFieldUpdateOperationsInput | string
+    genre?: StringFieldUpdateOperationsInput | string
     score?: FloatFieldUpdateOperationsInput | number
-    genre?: GenreUpdateOneWithoutSeriesNestedInput
-    User?: UserUpdateOneWithoutSeriesNestedInput
   }
 
   export type SeriesUncheckedUpdateInput = {
@@ -5723,9 +5374,8 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     releaseYear?: IntFieldUpdateOperationsInput | number
     poster_img?: StringFieldUpdateOperationsInput | string
-    genresId?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: StringFieldUpdateOperationsInput | string
     score?: FloatFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SeriesCreateManyInput = {
@@ -5734,9 +5384,8 @@ export namespace Prisma {
     description: string
     releaseYear: number
     poster_img: string
-    genresId?: string | null
+    genre: string
     score: number
-    userId?: string | null
   }
 
   export type SeriesUpdateManyMutationInput = {
@@ -5744,6 +5393,7 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     releaseYear?: IntFieldUpdateOperationsInput | number
     poster_img?: StringFieldUpdateOperationsInput | string
+    genre?: StringFieldUpdateOperationsInput | string
     score?: FloatFieldUpdateOperationsInput | number
   }
 
@@ -5752,31 +5402,26 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     releaseYear?: IntFieldUpdateOperationsInput | number
     poster_img?: StringFieldUpdateOperationsInput | string
-    genresId?: NullableStringFieldUpdateOperationsInput | string | null
+    genre?: StringFieldUpdateOperationsInput | string
     score?: FloatFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type GenreCreateInput = {
     id?: string
     name: string
-    series?: SeriesCreateNestedManyWithoutGenreInput
   }
 
   export type GenreUncheckedCreateInput = {
     id?: string
     name: string
-    series?: SeriesUncheckedCreateNestedManyWithoutGenreInput
   }
 
   export type GenreUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    series?: SeriesUpdateManyWithoutGenreNestedInput
   }
 
   export type GenreUncheckedUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    series?: SeriesUncheckedUpdateManyWithoutGenreNestedInput
   }
 
   export type GenreCreateManyInput = {
@@ -5807,34 +5452,12 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-    isSet?: boolean
-  }
-
-  export type SeriesNullableRelationFilter = {
-    is?: SeriesWhereInput | null
-    isNot?: SeriesWhereInput | null
-  }
-
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
     lastName?: SortOrder
-    seriesId?: SortOrder
-  }
-
-  export type UserAvgOrderByAggregateInput = {
-    seriesId?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -5843,7 +5466,6 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     lastName?: SortOrder
-    seriesId?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -5852,11 +5474,6 @@ export namespace Prisma {
     password?: SortOrder
     name?: SortOrder
     lastName?: SortOrder
-    seriesId?: SortOrder
-  }
-
-  export type UserSumOrderByAggregateInput = {
-    seriesId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5875,23 +5492,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-    isSet?: boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -5988,41 +5588,14 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-    isSet?: boolean
-  }
-
-  export type GenreNullableRelationFilter = {
-    is?: GenreWhereInput | null
-    isNot?: GenreWhereInput | null
-  }
-
-  export type UserNullableRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type SeriesCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     releaseYear?: SortOrder
     poster_img?: SortOrder
-    genresId?: SortOrder
+    genre?: SortOrder
     score?: SortOrder
-    userId?: SortOrder
   }
 
   export type SeriesAvgOrderByAggregateInput = {
@@ -6036,9 +5609,8 @@ export namespace Prisma {
     description?: SortOrder
     releaseYear?: SortOrder
     poster_img?: SortOrder
-    genresId?: SortOrder
+    genre?: SortOrder
     score?: SortOrder
-    userId?: SortOrder
   }
 
   export type SeriesMinOrderByAggregateInput = {
@@ -6047,43 +5619,13 @@ export namespace Prisma {
     description?: SortOrder
     releaseYear?: SortOrder
     poster_img?: SortOrder
-    genresId?: SortOrder
+    genre?: SortOrder
     score?: SortOrder
-    userId?: SortOrder
   }
 
   export type SeriesSumOrderByAggregateInput = {
     releaseYear?: SortOrder
     score?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-    isSet?: boolean
-  }
-
-  export type SeriesListRelationFilter = {
-    every?: SeriesWhereInput
-    some?: SeriesWhereInput
-    none?: SeriesWhereInput
-  }
-
-  export type SeriesOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type GenreCountOrderByAggregateInput = {
@@ -6101,49 +5643,8 @@ export namespace Prisma {
     name?: SortOrder
   }
 
-  export type SeriesCreateNestedOneWithoutUserInput = {
-    create?: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutUserInput
-    connect?: SeriesWhereUniqueInput
-  }
-
-  export type SeriesUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutUserInput
-    connect?: SeriesWhereUniqueInput
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-    unset?: boolean
-  }
-
-  export type SeriesUpdateOneWithoutUserNestedInput = {
-    create?: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutUserInput
-    upsert?: SeriesUpsertWithoutUserInput
-    disconnect?: SeriesWhereInput | boolean
-    delete?: SeriesWhereInput | boolean
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutUserInput, SeriesUpdateWithoutUserInput>, SeriesUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SeriesUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SeriesCreateOrConnectWithoutUserInput
-    upsert?: SeriesUpsertWithoutUserInput
-    disconnect?: SeriesWhereInput | boolean
-    delete?: SeriesWhereInput | boolean
-    connect?: SeriesWhereUniqueInput
-    update?: XOR<XOR<SeriesUpdateToOneWithWhereWithoutUserInput, SeriesUpdateWithoutUserInput>, SeriesUncheckedUpdateWithoutUserInput>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -6162,85 +5663,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type GenreCreateNestedOneWithoutSeriesInput = {
-    create?: XOR<GenreCreateWithoutSeriesInput, GenreUncheckedCreateWithoutSeriesInput>
-    connectOrCreate?: GenreCreateOrConnectWithoutSeriesInput
-    connect?: GenreWhereUniqueInput
-  }
-
-  export type UserCreateNestedOneWithoutSeriesInput = {
-    create?: XOR<UserCreateWithoutSeriesInput, UserUncheckedCreateWithoutSeriesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSeriesInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type GenreUpdateOneWithoutSeriesNestedInput = {
-    create?: XOR<GenreCreateWithoutSeriesInput, GenreUncheckedCreateWithoutSeriesInput>
-    connectOrCreate?: GenreCreateOrConnectWithoutSeriesInput
-    upsert?: GenreUpsertWithoutSeriesInput
-    disconnect?: boolean
-    delete?: GenreWhereInput | boolean
-    connect?: GenreWhereUniqueInput
-    update?: XOR<XOR<GenreUpdateToOneWithWhereWithoutSeriesInput, GenreUpdateWithoutSeriesInput>, GenreUncheckedUpdateWithoutSeriesInput>
-  }
-
-  export type UserUpdateOneWithoutSeriesNestedInput = {
-    create?: XOR<UserCreateWithoutSeriesInput, UserUncheckedCreateWithoutSeriesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSeriesInput
-    upsert?: UserUpsertWithoutSeriesInput
-    disconnect?: boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSeriesInput, UserUpdateWithoutSeriesInput>, UserUncheckedUpdateWithoutSeriesInput>
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-    unset?: boolean
-  }
-
-  export type SeriesCreateNestedManyWithoutGenreInput = {
-    create?: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput> | SeriesCreateWithoutGenreInput[] | SeriesUncheckedCreateWithoutGenreInput[]
-    connectOrCreate?: SeriesCreateOrConnectWithoutGenreInput | SeriesCreateOrConnectWithoutGenreInput[]
-    createMany?: SeriesCreateManyGenreInputEnvelope
-    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-  }
-
-  export type SeriesUncheckedCreateNestedManyWithoutGenreInput = {
-    create?: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput> | SeriesCreateWithoutGenreInput[] | SeriesUncheckedCreateWithoutGenreInput[]
-    connectOrCreate?: SeriesCreateOrConnectWithoutGenreInput | SeriesCreateOrConnectWithoutGenreInput[]
-    createMany?: SeriesCreateManyGenreInputEnvelope
-    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-  }
-
-  export type SeriesUpdateManyWithoutGenreNestedInput = {
-    create?: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput> | SeriesCreateWithoutGenreInput[] | SeriesUncheckedCreateWithoutGenreInput[]
-    connectOrCreate?: SeriesCreateOrConnectWithoutGenreInput | SeriesCreateOrConnectWithoutGenreInput[]
-    upsert?: SeriesUpsertWithWhereUniqueWithoutGenreInput | SeriesUpsertWithWhereUniqueWithoutGenreInput[]
-    createMany?: SeriesCreateManyGenreInputEnvelope
-    set?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    disconnect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    delete?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    update?: SeriesUpdateWithWhereUniqueWithoutGenreInput | SeriesUpdateWithWhereUniqueWithoutGenreInput[]
-    updateMany?: SeriesUpdateManyWithWhereWithoutGenreInput | SeriesUpdateManyWithWhereWithoutGenreInput[]
-    deleteMany?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
-  }
-
-  export type SeriesUncheckedUpdateManyWithoutGenreNestedInput = {
-    create?: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput> | SeriesCreateWithoutGenreInput[] | SeriesUncheckedCreateWithoutGenreInput[]
-    connectOrCreate?: SeriesCreateOrConnectWithoutGenreInput | SeriesCreateOrConnectWithoutGenreInput[]
-    upsert?: SeriesUpsertWithWhereUniqueWithoutGenreInput | SeriesUpsertWithWhereUniqueWithoutGenreInput[]
-    createMany?: SeriesCreateManyGenreInputEnvelope
-    set?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    disconnect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    delete?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    connect?: SeriesWhereUniqueInput | SeriesWhereUniqueInput[]
-    update?: SeriesUpdateWithWhereUniqueWithoutGenreInput | SeriesUpdateWithWhereUniqueWithoutGenreInput[]
-    updateMany?: SeriesUpdateManyWithWhereWithoutGenreInput | SeriesUpdateManyWithWhereWithoutGenreInput[]
-    deleteMany?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6253,18 +5675,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-    isSet?: boolean
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -6293,35 +5703,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-    isSet?: boolean
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-    isSet?: boolean
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -6367,282 +5748,11 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-    isSet?: boolean
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-    isSet?: boolean
-  }
-
-  export type SeriesCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description: string
-    releaseYear: number
-    poster_img: string
-    score: number
-    genre?: GenreCreateNestedOneWithoutSeriesInput
-  }
-
-  export type SeriesUncheckedCreateWithoutUserInput = {
-    id?: string
-    title: string
-    description: string
-    releaseYear: number
-    poster_img: string
-    genresId?: string | null
-    score: number
-  }
-
-  export type SeriesCreateOrConnectWithoutUserInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-  }
-
-  export type SeriesUpsertWithoutUserInput = {
-    update: XOR<SeriesUpdateWithoutUserInput, SeriesUncheckedUpdateWithoutUserInput>
-    create: XOR<SeriesCreateWithoutUserInput, SeriesUncheckedCreateWithoutUserInput>
-    where?: SeriesWhereInput
-  }
-
-  export type SeriesUpdateToOneWithWhereWithoutUserInput = {
-    where?: SeriesWhereInput
-    data: XOR<SeriesUpdateWithoutUserInput, SeriesUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SeriesUpdateWithoutUserInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    poster_img?: StringFieldUpdateOperationsInput | string
-    score?: FloatFieldUpdateOperationsInput | number
-    genre?: GenreUpdateOneWithoutSeriesNestedInput
-  }
-
-  export type SeriesUncheckedUpdateWithoutUserInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    poster_img?: StringFieldUpdateOperationsInput | string
-    genresId?: NullableStringFieldUpdateOperationsInput | string | null
-    score?: FloatFieldUpdateOperationsInput | number
-  }
-
-  export type GenreCreateWithoutSeriesInput = {
-    id?: string
-    name: string
-  }
-
-  export type GenreUncheckedCreateWithoutSeriesInput = {
-    id?: string
-    name: string
-  }
-
-  export type GenreCreateOrConnectWithoutSeriesInput = {
-    where: GenreWhereUniqueInput
-    create: XOR<GenreCreateWithoutSeriesInput, GenreUncheckedCreateWithoutSeriesInput>
-  }
-
-  export type UserCreateWithoutSeriesInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    lastName: string
-    seriesId?: number | null
-  }
-
-  export type UserUncheckedCreateWithoutSeriesInput = {
-    id?: string
-    email: string
-    password: string
-    name: string
-    lastName: string
-    seriesId?: number | null
-  }
-
-  export type UserCreateOrConnectWithoutSeriesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutSeriesInput, UserUncheckedCreateWithoutSeriesInput>
-  }
-
-  export type GenreUpsertWithoutSeriesInput = {
-    update: XOR<GenreUpdateWithoutSeriesInput, GenreUncheckedUpdateWithoutSeriesInput>
-    create: XOR<GenreCreateWithoutSeriesInput, GenreUncheckedCreateWithoutSeriesInput>
-    where?: GenreWhereInput
-  }
-
-  export type GenreUpdateToOneWithWhereWithoutSeriesInput = {
-    where?: GenreWhereInput
-    data: XOR<GenreUpdateWithoutSeriesInput, GenreUncheckedUpdateWithoutSeriesInput>
-  }
-
-  export type GenreUpdateWithoutSeriesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type GenreUncheckedUpdateWithoutSeriesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type UserUpsertWithoutSeriesInput = {
-    update: XOR<UserUpdateWithoutSeriesInput, UserUncheckedUpdateWithoutSeriesInput>
-    create: XOR<UserCreateWithoutSeriesInput, UserUncheckedCreateWithoutSeriesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutSeriesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutSeriesInput, UserUncheckedUpdateWithoutSeriesInput>
-  }
-
-  export type UserUpdateWithoutSeriesInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type UserUncheckedUpdateWithoutSeriesInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    lastName?: StringFieldUpdateOperationsInput | string
-    seriesId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type SeriesCreateWithoutGenreInput = {
-    id?: string
-    title: string
-    description: string
-    releaseYear: number
-    poster_img: string
-    score: number
-    User?: UserCreateNestedOneWithoutSeriesInput
-  }
-
-  export type SeriesUncheckedCreateWithoutGenreInput = {
-    id?: string
-    title: string
-    description: string
-    releaseYear: number
-    poster_img: string
-    score: number
-    userId?: string | null
-  }
-
-  export type SeriesCreateOrConnectWithoutGenreInput = {
-    where: SeriesWhereUniqueInput
-    create: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput>
-  }
-
-  export type SeriesCreateManyGenreInputEnvelope = {
-    data: SeriesCreateManyGenreInput | SeriesCreateManyGenreInput[]
-  }
-
-  export type SeriesUpsertWithWhereUniqueWithoutGenreInput = {
-    where: SeriesWhereUniqueInput
-    update: XOR<SeriesUpdateWithoutGenreInput, SeriesUncheckedUpdateWithoutGenreInput>
-    create: XOR<SeriesCreateWithoutGenreInput, SeriesUncheckedCreateWithoutGenreInput>
-  }
-
-  export type SeriesUpdateWithWhereUniqueWithoutGenreInput = {
-    where: SeriesWhereUniqueInput
-    data: XOR<SeriesUpdateWithoutGenreInput, SeriesUncheckedUpdateWithoutGenreInput>
-  }
-
-  export type SeriesUpdateManyWithWhereWithoutGenreInput = {
-    where: SeriesScalarWhereInput
-    data: XOR<SeriesUpdateManyMutationInput, SeriesUncheckedUpdateManyWithoutGenreInput>
-  }
-
-  export type SeriesScalarWhereInput = {
-    AND?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
-    OR?: SeriesScalarWhereInput[]
-    NOT?: SeriesScalarWhereInput | SeriesScalarWhereInput[]
-    id?: StringFilter<"Series"> | string
-    title?: StringFilter<"Series"> | string
-    description?: StringFilter<"Series"> | string
-    releaseYear?: IntFilter<"Series"> | number
-    poster_img?: StringFilter<"Series"> | string
-    genresId?: StringNullableFilter<"Series"> | string | null
-    score?: FloatFilter<"Series"> | number
-    userId?: StringNullableFilter<"Series"> | string | null
-  }
-
-  export type SeriesCreateManyGenreInput = {
-    id?: string
-    title: string
-    description: string
-    releaseYear: number
-    poster_img: string
-    score: number
-    userId?: string | null
-  }
-
-  export type SeriesUpdateWithoutGenreInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    poster_img?: StringFieldUpdateOperationsInput | string
-    score?: FloatFieldUpdateOperationsInput | number
-    User?: UserUpdateOneWithoutSeriesNestedInput
-  }
-
-  export type SeriesUncheckedUpdateWithoutGenreInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    poster_img?: StringFieldUpdateOperationsInput | string
-    score?: FloatFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type SeriesUncheckedUpdateManyWithoutGenreInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    releaseYear?: IntFieldUpdateOperationsInput | number
-    poster_img?: StringFieldUpdateOperationsInput | string
-    score?: FloatFieldUpdateOperationsInput | number
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
 
 
   /**
    * Aliases for legacy arg types
    */
-    /**
-     * @deprecated Use GenreCountOutputTypeDefaultArgs instead
-     */
-    export type GenreCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = GenreCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */

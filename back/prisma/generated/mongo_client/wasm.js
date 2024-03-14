@@ -117,8 +117,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
-  lastName: 'lastName',
-  seriesId: 'seriesId'
+  lastName: 'lastName'
 };
 
 exports.Prisma.MovieScalarFieldEnum = {
@@ -137,9 +136,8 @@ exports.Prisma.SeriesScalarFieldEnum = {
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genresId: 'genresId',
-  score: 'score',
-  userId: 'userId'
+  genre: 'genre',
+  score: 'score'
 };
 
 exports.Prisma.GenreScalarFieldEnum = {

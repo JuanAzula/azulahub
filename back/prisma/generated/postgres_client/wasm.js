@@ -87,7 +87,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.UsersScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
@@ -96,7 +96,7 @@ exports.Prisma.UserScalarFieldEnum = {
   seriesId: 'seriesId'
 };
 
-exports.Prisma.MovieScalarFieldEnum = {
+exports.Prisma.MoviesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
@@ -138,8 +138,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Movie: 'Movie',
+  Users: 'Users',
+  Movies: 'Movies',
   Series: 'Series',
   Genres: 'Genres'
 };
@@ -183,6 +183,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -191,13 +192,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = [\"driverAdapters\"]\n    output          = \"./generated/postgres_client\"\n}\n\ndatasource db {\n    provider = \"postgresql\"\n    url      = env(\"POSTGRES_URL\")\n}\n\nmodel User {\n    id          Int      @id @default(autoincrement())\n    email       String   @unique\n    password    String\n    name        String\n    lastName    String\n    likedMovies Movie[]  @relation(\"UserLikedMovies\")\n    likedSeries Series[] @relation(\"UserLikedSeries\")\n    seriesId    Int?\n}\n\nmodel Movie {\n    id          Int     @id @default(autoincrement())\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genre       Genres? @relation(fields: [genresId], references: [id])\n    genresId    Int?\n    score       Float\n    users       User[]  @relation(\"UserLikedMovies\")\n}\n\nmodel Series {\n    id          Int     @id @default(autoincrement())\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genre       Genres? @relation(fields: [genresId], references: [id])\n    genresId    Int?\n    score       Float\n    users       User[]  @relation(\"UserLikedSeries\")\n}\n\nmodel Genres {\n    id     Int      @id @default(autoincrement())\n    name   String   @unique\n    movie  Movie[]\n    series Series[]\n}\n",
-  "inlineSchemaHash": "4a37920c16d1fb5b26e0a5ae2439e6d63bf84df652d2a1d89004d90182bb2da1",
+  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = [\"driverAdapters\"]\n    output          = \"./generated/postgres_client\"\n}\n\ndatasource db {\n    provider = \"postgresql\"\n    url      = env(\"POSTGRES_URL\")\n}\n\nmodel Users {\n    id          Int      @id @default(autoincrement())\n    email       String   @unique\n    password    String\n    name        String\n    lastName    String\n    likedMovies Movies[] @relation(\"UserLikedMovies\")\n    likedSeries Series[] @relation(\"UserLikedSeries\")\n    seriesId    Int?\n}\n\nmodel Movies {\n    id          Int     @id @default(autoincrement())\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genre       Genres? @relation(fields: [genresId], references: [id])\n    genresId    Int?\n    score       Float\n    users       Users[] @relation(\"UserLikedMovies\")\n}\n\nmodel Series {\n    id          Int     @id @default(autoincrement())\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genre       Genres? @relation(fields: [genresId], references: [id])\n    genresId    Int?\n    score       Float\n    users       Users[] @relation(\"UserLikedSeries\")\n}\n\nmodel Genres {\n    id     Int      @id @default(autoincrement())\n    name   String   @unique\n    movie  Movies[]\n    series Series[]\n}\n",
+  "inlineSchemaHash": "8876d3726583b3fe48bce65cb2bde721c66d2d2ed6595b60e9ee44c6a74b6455",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"likedMovies\",\"kind\":\"object\",\"type\":\"Movie\",\"relationName\":\"UserLikedMovies\"},{\"name\":\"likedSeries\",\"kind\":\"object\",\"type\":\"Series\",\"relationName\":\"UserLikedSeries\"},{\"name\":\"seriesId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Movie\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"poster_img\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"object\",\"type\":\"Genres\",\"relationName\":\"GenresToMovie\"},{\"name\":\"genresId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserLikedMovies\"}],\"dbName\":null},\"Series\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"poster_img\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"object\",\"type\":\"Genres\",\"relationName\":\"GenresToSeries\"},{\"name\":\"genresId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserLikedSeries\"}],\"dbName\":null},\"Genres\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"movie\",\"kind\":\"object\",\"type\":\"Movie\",\"relationName\":\"GenresToMovie\"},{\"name\":\"series\",\"kind\":\"object\",\"type\":\"Series\",\"relationName\":\"GenresToSeries\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Users\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"likedMovies\",\"kind\":\"object\",\"type\":\"Movies\",\"relationName\":\"UserLikedMovies\"},{\"name\":\"likedSeries\",\"kind\":\"object\",\"type\":\"Series\",\"relationName\":\"UserLikedSeries\"},{\"name\":\"seriesId\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Movies\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"poster_img\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"object\",\"type\":\"Genres\",\"relationName\":\"GenresToMovies\"},{\"name\":\"genresId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"UserLikedMovies\"}],\"dbName\":null},\"Series\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"releaseYear\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"poster_img\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"genre\",\"kind\":\"object\",\"type\":\"Genres\",\"relationName\":\"GenresToSeries\"},{\"name\":\"genresId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"score\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"Users\",\"relationName\":\"UserLikedSeries\"}],\"dbName\":null},\"Genres\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"movie\",\"kind\":\"object\",\"type\":\"Movies\",\"relationName\":\"GenresToMovies\"},{\"name\":\"series\",\"kind\":\"object\",\"type\":\"Series\",\"relationName\":\"GenresToSeries\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: () => require('./query_engine_bg.js'),

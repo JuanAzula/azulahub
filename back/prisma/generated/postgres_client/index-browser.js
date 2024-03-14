@@ -119,7 +119,7 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.UsersScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
@@ -128,7 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   seriesId: 'seriesId'
 };
 
-exports.Prisma.MovieScalarFieldEnum = {
+exports.Prisma.MoviesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
@@ -170,8 +170,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Movie: 'Movie',
+  Users: 'Users',
+  Movies: 'Movies',
   Series: 'Series',
   Genres: 'Genres'
 };

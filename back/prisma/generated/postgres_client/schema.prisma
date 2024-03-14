@@ -9,18 +9,18 @@ datasource db {
     url      = env("POSTGRES_URL")
 }
 
-model User {
+model Users {
     id          Int      @id @default(autoincrement())
     email       String   @unique
     password    String
     name        String
     lastName    String
-    likedMovies Movie[]  @relation("UserLikedMovies")
+    likedMovies Movies[] @relation("UserLikedMovies")
     likedSeries Series[] @relation("UserLikedSeries")
     seriesId    Int?
 }
 
-model Movie {
+model Movies {
     id          Int     @id @default(autoincrement())
     title       String
     description String
@@ -29,7 +29,7 @@ model Movie {
     genre       Genres? @relation(fields: [genresId], references: [id])
     genresId    Int?
     score       Float
-    users       User[]  @relation("UserLikedMovies")
+    users       Users[] @relation("UserLikedMovies")
 }
 
 model Series {
@@ -41,12 +41,12 @@ model Series {
     genre       Genres? @relation(fields: [genresId], references: [id])
     genresId    Int?
     score       Float
-    users       User[]  @relation("UserLikedSeries")
+    users       Users[] @relation("UserLikedSeries")
 }
 
 model Genres {
     id     Int      @id @default(autoincrement())
     name   String   @unique
-    movie  Movie[]
+    movie  Movies[]
     series Series[]
 }

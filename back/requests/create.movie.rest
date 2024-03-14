@@ -6,6 +6,6 @@ Content-Type: application/json
   "description": "The epic comeback of Lightning Mcqueen",
   "releaseYear": 2025,
   "poster_img": "huig",
-  "genre": "Action",
+  "genresId": 1,
   "score": 3.6
 }
