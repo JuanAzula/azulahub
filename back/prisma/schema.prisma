@@ -1,0 +1,51 @@
+// generator client {
+//   provider        = "prisma-client-js"
+//   previewFeatures = ["driverAdapters"]
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("POSTGRES_URL")
+// }
+
+// model User {
+//   id          Int      @id @default(autoincrement())
+//   email       String   @unique
+//   password    String
+//   name        String
+//   lastName    String
+//   likedMovies Movie[]  @relation("UserLikedMovies")
+//   likedSeries Series[] @relation("UserLikedSeries")
+//   seriesId    Int?
+// }
+
+// model Movie {
+//   id          Int     @id @default(autoincrement())
+//   title       String
+//   description String
+//   releaseYear Int
+//   poster_img  String
+//   genre       Genres? @relation(fields: [genresId], references: [id])
+//   genresId    Int?
+//   score       Float
+//   users       User[]  @relation("UserLikedMovies")
+// }
+
+// model Series {
+//   id          Int     @id @default(autoincrement())
+//   title       String
+//   description String
+//   releaseYear Int
+//   poster_img  String
+//   genre       Genres? @relation(fields: [genresId], references: [id])
+//   genresId    Int?
+//   score       Float
+//   users       User[]  @relation("UserLikedSeries")
+// }
+
+// model Genres {
+//   id     Int      @id @default(autoincrement())
+//   name   String   @unique
+//   movie  Movie[]
+//   series Series[]
+// }
