@@ -1,5 +1,5 @@
-import { jwt } from 'jsonwebtoken'
-import { bcrypt } from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt';
 import { prismaClient as prisma } from '../prismaClient'
 
 
@@ -11,29 +11,38 @@ async function getUser(request, response) {
 
 async function createUser(request, response) {
     const { body } = request
-    const { username, name, password } = body
-    console.log('entro en la petición post')
-    const saltRounds = 10
-    const passwordHash = await bcrypt.hash(password, saltRounds)
+    const { email, name, password } = body
+    // console.log('entro en la petición post', email, name, password)
+    try {
 
-    const user = new prisma.user.create({
-        username,
-        name,
-        passwordHash
-    })
+        const saltRounds = 10
+        const passwordHash = await bcrypt.hash(password, saltRounds)
+        console.log('passwordHash', passwordHash)
+        const newUser = await prisma.users.create({
+            data: {
+                email,
+                name,
+                password: passwordHash
+            }
+        })
 
-    const savedUser = await user.save()
 
-    response.status(201).json(savedUser)
+        response.status(201).json(newUser)
+    }
+    catch (err) {
+        console.error('Error creating user:', err);
+        response.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 async function deleteUser(request, response) {
     const { id } = request.params
-    const user = await prisma.user.delete({ where: { id: Number(id) } })
+    const user = await prisma.users.delete({ where: { id: id } })
     response.json(user)
 }
 
 export {
     getUser,
-    createUser
+    createUser,
+    deleteUser
 }

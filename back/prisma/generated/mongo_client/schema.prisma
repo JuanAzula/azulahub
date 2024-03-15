@@ -11,35 +11,40 @@ datasource db {
 
 // schema.prisma
 
-model User {
-    id       String @id @default(auto()) @map("_id") @db.ObjectId
-    email    String @unique
+model Users {
+    id       String   @id @default(auto()) @map("_id") @db.ObjectId
+    email    String   @unique
     password String
     name     String
-    lastName String
+    movies   Movies[]
+    series   Series[]
 }
 
-model Movie {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
+model Movies {
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
     title       String
     description String
     releaseYear Int
     poster_img  String
-    genre       String
+    genresId    String  @unique
     score       Float
+    Users       Users?  @relation(fields: [usersId], references: [id])
+    usersId     String? @db.ObjectId
 }
 
 model Series {
-    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    id          String  @id @default(auto()) @map("_id") @db.ObjectId
     title       String
     description String
     releaseYear Int
     poster_img  String
-    genre       String
+    genresId    String  @unique
     score       Float
+    Users       Users?  @relation(fields: [usersId], references: [id])
+    usersId     String? @db.ObjectId
 }
 
-model Genre {
+model Genres {
     id   String @id @default(auto()) @map("_id") @db.ObjectId
     name String @unique
 }

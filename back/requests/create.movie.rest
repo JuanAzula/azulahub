@@ -1,11 +1,12 @@
 POST http://localhost:3333/api/movies
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDA5ODMsImV4cCI6MTcxMTEwNTc4M30.qFH1xfwtWn-5Zrrx2V-xHuNdBcdMRhOY7sWW-431ewA
 
 {
-  "title": "Cars 4",
-  "description": "The epic comeback of Lightning Mcqueen",
-  "releaseYear": 2025,
-  "poster_img": "huig",
+  "title": "Fast and Furious 83",
+  "description": "The epic comeback of Dominick Toreto",
+  "releaseYear": 2043,
+  "poster_img": "https://res.cloudinary.com/dgtamgaup/image/upload/v1710430305/ddx5zoocjndw9w70y2co.webp",
   "genresId": 1,
-  "score": 3.6
+  "score": 7
 }

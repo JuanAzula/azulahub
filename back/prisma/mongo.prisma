@@ -26,7 +26,7 @@ model Movies {
     description String
     releaseYear Int
     poster_img  String
-    genre       String
+    genresId    String  @unique
     score       Float
     Users       Users?  @relation(fields: [usersId], references: [id])
     usersId     String? @db.ObjectId
@@ -38,7 +38,7 @@ model Series {
     description String
     releaseYear Int
     poster_img  String
-    genre       String
+    genresId    String  @unique
     score       Float
     Users       Users?  @relation(fields: [usersId], references: [id])
     usersId     String? @db.ObjectId

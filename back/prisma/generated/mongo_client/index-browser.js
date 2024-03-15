@@ -112,22 +112,22 @@ Prisma.NullTypes = {
  * Enums
  */
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.UsersScalarFieldEnum = {
   id: 'id',
   email: 'email',
   password: 'password',
-  name: 'name',
-  lastName: 'lastName'
+  name: 'name'
 };
 
-exports.Prisma.MovieScalarFieldEnum = {
+exports.Prisma.MoviesScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genre: 'genre',
-  score: 'score'
+  genresId: 'genresId',
+  score: 'score',
+  usersId: 'usersId'
 };
 
 exports.Prisma.SeriesScalarFieldEnum = {
@@ -136,11 +136,12 @@ exports.Prisma.SeriesScalarFieldEnum = {
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genre: 'genre',
-  score: 'score'
+  genresId: 'genresId',
+  score: 'score',
+  usersId: 'usersId'
 };
 
-exports.Prisma.GenreScalarFieldEnum = {
+exports.Prisma.GenresScalarFieldEnum = {
   id: 'id',
   name: 'name'
 };
@@ -157,10 +158,10 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  User: 'User',
-  Movie: 'Movie',
+  Users: 'Users',
+  Movies: 'Movies',
   Series: 'Series',
-  Genre: 'Genre'
+  Genres: 'Genres'
 };
 
 /**

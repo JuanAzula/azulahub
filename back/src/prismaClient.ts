@@ -18,14 +18,14 @@ if (DATA_SOURCE === "postgres") {
     const connectionString = `${process.env.POSTGRES_URL}`
     const pool = new Pool({ connectionString })
     const adapter = new PrismaPg(pool)
-    const postgresClient = new PostgresClient({ adapter });
+    const postgresClient: ClientPostgres = new PostgresClient({ adapter });
     console.log('postgresClient')
     prismaClient = postgresClient
 } else {
     const connectionString = `${process.env.MONGO_URL}`
     const pool = new Pool({ connectionString })
     const adapter = new PrismaPg(pool)
-    const mongoClient = new MongoClient();
+    const mongoClient: ClientMongo = new MongoClient();
     console.log('mongoClient')
     prismaClient = mongoClient
 }

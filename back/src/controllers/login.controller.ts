@@ -1,5 +1,5 @@
-import { jwt } from 'jsonwebtoken'
-import { bcrypt } from 'bcrypt'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 import { prismaClient as prisma } from '../prismaClient'
 
 
@@ -7,13 +7,18 @@ import { prismaClient as prisma } from '../prismaClient'
 async function loginUser(request, response) {
     const { body } = request
     console.log('loginUser en controller', body)
-    const { username, password } = body
+    const { email, password } = body
 
-    const user = await prisma.user.findOne({ username })
+    const user = await prisma.users.findUnique({
+        where: {
+            email: email
+        }
+    })
 
-    const passwordCorrect = user === null
-        ? false
-        : await bcrypt.compare(password, user.passwordHash)
+    const passwordCorrect =
+        user === null
+            ? false
+            : await bcrypt.compare(password, user.password)
 
     if (!(user && passwordCorrect)) {
         response.status(401).json({
@@ -38,13 +43,13 @@ async function loginUser(request, response) {
     console.log('llegando al final de la función')
     response.send({
         name: user.name,
-        username: user.username,
+        email: user.email,
         id: user._id,
         token
     })
     console.log('saliendo de la función')
 }
 
-module.exports = {
+export {
     loginUser
 }
