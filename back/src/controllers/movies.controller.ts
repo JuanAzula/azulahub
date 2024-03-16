@@ -111,18 +111,29 @@ async function updateMovie(req, res) {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
 
-  const movie = await prisma.movies.update({
-    where: { id: id },
-    data: {
-      title,
-      description,
-      releaseYear,
-      poster_img,
-      genresId,
-      score
+  try {
+    const movie = await prisma.movies.findUnique({ where: { id: id } })
+
+    if (!movie) {
+      return res.status(404).json({ error: 'movie not found' })
     }
-  })
-  res.json(movie)
+
+    const updatedMovie = await prisma.movies.update({
+      where: { id: id },
+      data: {
+        title: title || movie.title,
+        description: description || movie.description,
+        releaseYear: releaseYear || movie.releaseYear,
+        poster_img: poster_img || movie.poster_img,
+        genresId: genresId || movie.genresId,
+        score: score || movie.score
+      }
+    })
+    res.json(updatedMovie)
+  } catch (error) {
+    console.error('Error updating movie:', error)
+    res.status(500).json({ error: 'Error updating movie' })
+  }
 }
 
 export {

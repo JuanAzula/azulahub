@@ -7,6 +7,6 @@ router.get("/series", getSeries)
 router.get("/series/:id", getOneSeries)
 router.post("/series", createSeries)
 router.delete("/series/:id", deleteSeries)
-router.put("/series/:id", updateSeries)
+router.patch("/series/:id", updateSeries)
 
 export default router

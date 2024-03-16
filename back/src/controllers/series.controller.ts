@@ -111,18 +111,29 @@ async function updateSeries(req, res) {
         return res.status(401).json({ error: 'token missing or invalid' })
     }
 
-    const series = await prisma.series.update({
-        where: { id: id },
-        data: {
-            title,
-            description,
-            releaseYear,
-            poster_img,
-            genresId,
-            score
+    try {
+        const series = await prisma.series.findUnique({ where: { id: id } })
+
+        if (!series) {
+            return res.status(404).json({ error: 'series not found' })
         }
-    })
-    res.json(series)
+
+        const updatedMovie = await prisma.series.update({
+            where: { id: id },
+            data: {
+                title: title || series.title,
+                description: description || series.description,
+                releaseYear: releaseYear || series.releaseYear,
+                poster_img: poster_img || series.poster_img,
+                genresId: genresId || series.genresId,
+                score: score || series.score
+            }
+        })
+        res.json(updateSeries)
+    } catch (error) {
+        console.error('Error updating series:', error)
+        res.status(500).json({ error: 'Error updating series' })
+    }
 }
 
 export {

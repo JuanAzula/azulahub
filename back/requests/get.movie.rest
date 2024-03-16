@@ -1,1 +1,1 @@
-GET http://localhost:3333/api/movies/65f314d31b549af36597cf3f
+GET http://localhost:3333/api/movies

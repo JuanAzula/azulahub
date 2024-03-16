@@ -7,6 +7,6 @@ router.get("/movies", getMovies)
 router.get("/movies/:id", getMovie)
 router.post("/movies", createMovie)
 router.delete("/movies/:id", deleteMovie)
-router.put("/movies/:id", updateMovie)
+router.patch("/movies/:id", updateMovie)
 
 export default router

@@ -1,11 +1,9 @@
-PUT http://localhost:3333/api/movies/65f31881fd25437e379a420c
+PATCH http://localhost:3333/api/movies/65f31881fd25437e379a420c
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDA5ODMsImV4cCI6MTcxMTEwNTc4M30.qFH1xfwtWn-5Zrrx2V-xHuNdBcdMRhOY7sWW-431ewA
 
 {
-    "title": "Kung fu Panda 7",
-  "description": "The epic comeback of Maestro Shifu",
-  "releaseYear": 2032,
-  "poster_img": "https://res.cloudinary.com/dgtamgaup/image/upload/v1710430305/ddx5zoocjndw9w70y2co.webp",
-  "genresId": "1",
-  "score": 6.2
+
+  "releaseYear": 2037
+
 }
