@@ -9,6 +9,12 @@ async function getUser(request, response) {
     response.json(users)
 }
 
+async function getUserById(request, response) {
+    const { id } = request.params
+    const user = await prisma.users.findUnique({ where: { id: id } })
+    response.json(user)
+}
+
 async function createUser(request, response) {
     const { body } = request
     const { email, name, password } = body
@@ -44,5 +50,6 @@ async function deleteUser(request, response) {
 export {
     getUser,
     createUser,
-    deleteUser
+    deleteUser,
+    getUserById
 }
