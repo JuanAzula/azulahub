@@ -4,6 +4,13 @@ import { PrismaClient as PostgresClient } from "../prisma/generated/postgres_cli
 import pkg from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 const { Pool } = pkg
 
 export const DATA_SOURCE = process.env.DATA_SOURCE ?? "mongo"

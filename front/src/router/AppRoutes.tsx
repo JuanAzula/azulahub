@@ -4,7 +4,7 @@ import { SeriesService } from "../services/SeriesService"
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import '../styles/App.css'
-import { TokenService } from '../services/MovieService'
+import { TokenService } from '../services/TokenService'
 import { Login } from "../components/LoginForm"
 import { Home } from "../components/Home"
 
@@ -41,18 +41,22 @@ export const AppRoutes = () => {
         queryKey: ['userLogged'],
         queryFn: async () => getUser()
     })
+    console.log(queryUserLogged.data)
 
     const queryMovies = useQuery({
         queryKey: ['movies'],
         queryFn: async () => getMovies()
     })
+    console.log(queryMovies.data)
 
     const querySeries = useQuery({
         queryKey: ['series'],
         queryFn: async () => getSeries()
     })
+    console.log(querySeries.data)
 
     const [user, setUser] = useState<User | null>(null)
+    console.log(user)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('LoggedUser')
@@ -60,6 +64,17 @@ export const AppRoutes = () => {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
             TokenService.setToken(user.token)
+            const checkTokenValidity = async () => {
+                const isValidToken = await TokenService.validateToken(user.token);
+                console.log('isValidToken', isValidToken)
+                if (!isValidToken) {
+                    // Token is invalid, perform logout action
+                    console.log('Token is invalid, perform logout action', isValidToken);
+                    HandleLogout();
+                }
+            };
+            console.log('checkTokenValidity', user.token)
+            checkTokenValidity();
         }
     }, [])
 
@@ -67,15 +82,14 @@ export const AppRoutes = () => {
 
     const HandleLogout = () => {
         window.localStorage.removeItem('LoggedUser')
-        if (user) {
-            setUser(null)
-            TokenService.setToken(user?.token)
-            window.location.reload()
-        }
+
+        setUser(null)
+        window.location.reload()
     }
 
     return (
         <BrowserRouter>
+            <button onClick={HandleLogout}>Logout</button>
             {queryUserLogged.data
                 ? (
                     <>
@@ -92,7 +106,7 @@ export const AppRoutes = () => {
                                 <Home user={queryUserLogged.data} movies={queryMovies.data} series={querySeries.data} />
                             )
                             : (
-                                <Login setUser={setUser} />
+                                <Login queryUserLogged={queryUserLogged} setUser={setUser} />
                             )
                     }
                 />

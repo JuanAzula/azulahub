@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import LoginService from '../services/LoginService'
-import { TokenService } from '../services/MovieService'
+import { TokenService } from '../services/TokenService'
 
-export const Login = (setUser: any) => {
+export const Login = (queryUserLogged: any, setUser: any) => {
     // const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [passwordError, setPasswordError] = useState('')
     const [emailError, setEmailError] = useState('')
@@ -22,16 +22,16 @@ export const Login = (setUser: any) => {
             window.localStorage.setItem(
                 'LoggedUser', JSON.stringify(user)
             )
-
+            console.log('USER', user)
             TokenService.setToken(user.token)
-
-            setUser(user)
+            console.log('USER TOKEN', user.token)
+            console.log('mecachis')
             setUsername('')
             setPassword('')
             console.log('USER', user)
             console.log('USER TOKEN', user.token)
-            console.log('Username', user.username)
-            console.log('Password', user.password)
+            console.log('Username', user.email)
+            window.location.reload()
         } catch (e) {
             // setErrorMessage('Wrong credentials')
             console.log('no ha salido bien')

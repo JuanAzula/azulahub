@@ -56,6 +56,22 @@ async function loginUser(request, response) {
     console.log('saliendo de la función')
 }
 
+async function validLogin(request, response) {
+    console.log('validLogin en controller')
+    const { body } = request
+    console.log('body', body)
+    const { token } = body
+    console.log('validLogin en controller', token)
+    try {
+        jwt.verify(token, process.env.SECRET)
+        response.send(true)
+        console.log('login validated')
+    } catch (error) {
+        response.send(false)
+    }
+}
+
 export {
-    loginUser
+    loginUser,
+    validLogin
 }
