@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt';
 import { prismaClient as prisma } from '../prismaClient'
+import { redisClient } from '../prismaClient'
 
 
 async function getUser(request, response) {

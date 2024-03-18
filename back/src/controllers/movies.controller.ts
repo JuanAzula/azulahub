@@ -1,9 +1,27 @@
 import { prismaClient as prisma } from '../prismaClient.ts'
 import jwt from 'jsonwebtoken'
+import { redisClient } from '../prismaClient.ts'
 
 
 async function getMovies(req, res) {
+  const moviesInRedis = await redisClient.get('movies')
+  if (moviesInRedis) {
+    console.log('moviesInRedis', moviesInRedis)
+    res.json(JSON.parse(moviesInRedis))
+    return
+  }
   const movies = await prisma.Movies.findMany()
+  if (!movies) {
+    res.status(404).json({ message: 'No movies found' })
+    return
+  }
+  try {
+    await redisClient.set('movies', JSON.stringify(movies))
+    redisClient.expire('movies', 60 * 60 * 24);
+  }
+  catch (err) {
+    console.log('error storing movies in redis', err)
+  }
   res.json(movies)
 }
 

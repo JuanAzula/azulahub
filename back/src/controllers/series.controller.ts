@@ -1,9 +1,26 @@
 import { prismaClient as prisma } from '../prismaClient.ts'
 import jwt from 'jsonwebtoken'
+import { redisClient } from '../prismaClient.ts'
 
 
 async function getSeries(req, res) {
+    const seriesInRedis = await redisClient.get('series')
+    if (seriesInRedis) {
+        console.log('seriesInRedis', seriesInRedis)
+        res.json(JSON.parse(seriesInRedis))
+        return
+    }
     const series = await prisma.series.findMany()
+    if (!series) {
+        res.status(404).json({ message: 'No series found' })
+        return
+    }
+    try {
+        await redisClient.set('series', JSON.stringify(series))
+        redisClient.expire('series', 60 * 60 * 24);
+    } catch (err) {
+        console.log('error storing series in redis', err)
+    }
     res.json(series)
 }
 
