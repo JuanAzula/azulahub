@@ -22,7 +22,7 @@ app.use('/api', moviesRoutes)
 app.use('/api', loginRoutes)
 app.use('/api', userRoutes)
 
-const PORT = env.PORT || 3000
+const PORT = env.PORT || 3333
 const server = app.listen(PORT, () =>
     console.log(`[server]: Server is running at http://localhost:${PORT}`)
 )

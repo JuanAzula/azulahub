@@ -7,8 +7,14 @@ import { prismaClient as prisma } from '../prismaClient'
 async function loginUser(request, response) {
     const { body } = request
     console.log('loginUser en controller', body)
-    const { email, password } = body
-
+    const { username: email, password } = body
+    console.log('email', email, 'password', password)
+    if (!email || !password) {
+        response.status(401).json({
+            error: 'invalid user or password'
+        })
+        return
+    }
     const user = await prisma.users.findUnique({
         where: {
             email: email
@@ -30,14 +36,14 @@ async function loginUser(request, response) {
     console.log('después de chekear si es correcto')
     const userForToken = {
         id: user._id,
-        username: user.username
+        email: user.email
     }
 
     const token = jwt.sign(
         userForToken,
         process.env.SECRET,
         {
-            expiresIn: 60 * 60 * 24 * 7
+            expiresIn: 60 * 60 * 24
         }
     )
     console.log('llegando al final de la función')

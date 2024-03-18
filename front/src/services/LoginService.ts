@@ -7,6 +7,7 @@ export default class LoginService {
         const respuesta = await axios.post(baseUrl, logindata, {
             headers: { 'Content-Type': 'application/json' }
         })
+        console.log('response', respuesta)
         return respuesta.data
     }
 }

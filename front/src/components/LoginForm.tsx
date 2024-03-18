@@ -1,38 +1,49 @@
 import { useState } from 'react'
-import { UserService } from '../services/UserService'
-import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import './Login.css'
-import logo from '../../assets/logo.png'
+import LoginService from '../services/LoginService'
+import { TokenService } from '../services/MovieService'
 
-export const Login = () => {
-    const userQuery = useQuery({
-        queryKey: ['user'],
-        queryFn: async () => await UserService.getUsers()
-    })
-
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault()
-
-        if (username && password) {
-            const user = userQuery.data.find(
-                (user: { email: string, password: string }) => {
-                    return user.email === username && user.password === password
-                }
-            )
-            if (user !== undefined) {
-                window.localStorage.setItem('userLogged', JSON.stringify(user))
-                window.location.reload()
-            } else {
-                alert('Invalid username or password')
-            }
-        }
-    }
-
+export const Login = (setUser: any) => {
+    // const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [passwordError, setPasswordError] = useState('')
     const [emailError, setEmailError] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const handleLogin = async (event: React.FormEvent) => {
+        event.preventDefault()
+        console.log('LOGIN', username, password)
+        try {
+            const user = await LoginService.LoginUser({
+                username,
+                password
+            })
+
+            window.localStorage.setItem(
+                'LoggedUser', JSON.stringify(user)
+            )
+
+            TokenService.setToken(user.token)
+
+            setUser(user)
+            setUsername('')
+            setPassword('')
+            console.log('USER', user)
+            console.log('USER TOKEN', user.token)
+            console.log('Username', user.username)
+            console.log('Password', user.password)
+        } catch (e) {
+            // setErrorMessage('Wrong credentials')
+            console.log('no ha salido bien')
+            setTimeout(() => {
+                // setErrorMessage(null)
+            }, 5000)
+        }
+    }
+
+
+
+
 
     const validateEmail = (input: string) => {
         if (input.trim() === '') {
@@ -78,7 +89,6 @@ export const Login = () => {
 
     return (
         <div className="login--container">
-            <img className="logo" src={logo} />
             <h2 className="login--header">Login</h2>
 
             <form onSubmit={handleLogin} className="login-form">

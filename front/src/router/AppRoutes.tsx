@@ -2,19 +2,13 @@ import { useQuery } from "@tanstack/react-query"
 import { MovieService } from "../services/MovieService"
 import { SeriesService } from "../services/SeriesService"
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
-import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import '../styles/App.css'
 import { TokenService } from '../services/MovieService'
-import LoginService from '../services/LoginService'
 import { Login } from "../components/LoginForm"
 import { Home } from "../components/Home"
 
-interface User {
-    id: string;
-    name: string;
-    // Otros campos del usuario
-    token: string; // Propiedad token
-}
+
 
 
 const getUser = () => {
@@ -22,6 +16,9 @@ const getUser = () => {
     if (loggedUserJSON) {
         const user = JSON.parse(loggedUserJSON)
         return user
+    }
+    else {
+        return null
     }
 }
 
@@ -55,10 +52,6 @@ export const AppRoutes = () => {
         queryFn: async () => getSeries()
     })
 
-    // const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    const [movies, setMovies] = useState([])
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
@@ -70,44 +63,14 @@ export const AppRoutes = () => {
         }
     }, [])
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const HandleLogout = () => {
         window.localStorage.removeItem('LoggedUser')
         if (user) {
             setUser(null)
             TokenService.setToken(user?.token)
-            navigate('/')
-        }
-    }
-
-    const handleLogin = async (event: React.FormEvent) => {
-        event.preventDefault()
-        console.log('THIS IS SUBMIT')
-        try {
-            const user = await LoginService.LoginUser({
-                username,
-                password
-            })
-
-            window.localStorage.setItem(
-                'LoggedUser', JSON.stringify(user)
-            )
-
-            TokenService.setToken(user.token)
-
-            setUser(user)
-            setUsername('')
-            setPassword('')
-            console.log('USER', user)
-            console.log('USER TOKEN', user.token)
-            console.log('Username', user.username)
-            console.log('Password', user.password)
-        } catch (e) {
-            // setErrorMessage('Wrong credentials')
-            setTimeout(() => {
-                // setErrorMessage(null)
-            }, 5000)
+            window.location.reload()
         }
     }
 
@@ -126,10 +89,10 @@ export const AppRoutes = () => {
                     element={
                         queryUserLogged.data
                             ? (
-                                <Home user={queryUserLogged.data} />
+                                <Home user={queryUserLogged.data} movies={queryMovies.data} series={querySeries.data} />
                             )
                             : (
-                                <Login />
+                                <Login setUser={setUser} />
                             )
                     }
                 />
@@ -138,7 +101,7 @@ export const AppRoutes = () => {
                     element={
                         queryUserLogged.data
                             ? (
-                                <Home user={queryUserLogged.data} />
+                                <Home user={queryUserLogged.data} movies={queryMovies.data} series={querySeries.data} />
                             )
                             : (
                                 <Login />
