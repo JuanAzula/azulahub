@@ -79,7 +79,6 @@ export const Login = (queryUserLogged: any, setUser: any) => {
         handleUsernameChange(event)
         validateEmail(event.target.value)
     }
-
     const handlePasswordInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
@@ -88,33 +87,38 @@ export const Login = (queryUserLogged: any, setUser: any) => {
     }
 
     return (
-        <div className="login--container">
-            <h2 className="login--header">Login</h2>
+        <div className="absolute h-full w-full bg-[url('src/assets/img/hero.webp')] bg-no-repeat bg-center bg-fixed bg-cover">
+            <div className='bg-black bg-opacity-50 absolute h-full w-full'>
+                <nav>
+                    <img src="src/assets/img/logo.webp" className='h-12' alt="" />
+                </nav>
+                <h2 className="login--header">Login</h2>
 
-            <form onSubmit={handleLogin} className="login-form">
-                <input
-                    className="login-input"
-                    type="text"
-                    value={username}
-                    id="email"
-                    placeholder="email or username"
-                    onChange={handleUsernameInputChange}
-                />
-                <input
-                    className="login-input"
-                    type="password"
-                    value={password}
-                    id="password"
-                    placeholder="password"
-                    onChange={handlePasswordInputChange}
-                />
-                {passwordError && <div className="error-password">{passwordError}</div>}
-                {emailError && <div className="error-email">{emailError}</div>}
-                <button className="login-button" style={{ height: '30px' }} type="submit">
-                    Login
-                </button>
-                <Link to="/signup">Don't have an account? Sign up!</Link>
-            </form>
+                <form onSubmit={handleLogin} className="login-form">
+                    <input
+                        className="login-input"
+                        type="text"
+                        value={username}
+                        id="email"
+                        placeholder="email or username"
+                        onChange={handleUsernameInputChange}
+                    />
+                    <input
+                        className="login-input"
+                        type="password"
+                        value={password}
+                        id="password"
+                        placeholder="password"
+                        onChange={handlePasswordInputChange}
+                    />
+                    {passwordError && <div className="error-password">{passwordError}</div>}
+                    {emailError && <div className="error-email">{emailError}</div>}
+                    <button className="login-button" style={{ height: '30px' }} type="submit">
+                        Login
+                    </button>
+                    <Link to="/signup">Don't have an account? Sign up!</Link>
+                </form>
+            </div>
         </div>
     )
 }

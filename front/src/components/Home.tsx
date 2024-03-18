@@ -6,7 +6,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
     return (
         <div>
-            <h1>{user.name}</h1>
+            <h1 className="text-2xl text-green-500" >{user.name}</h1>
             <h2>{user.email}</h2>
             {movies?.map((movie: any) => (
                 <div key={movie?.id}>
