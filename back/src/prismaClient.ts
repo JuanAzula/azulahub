@@ -1,7 +1,6 @@
 import { DefaultArgs } from "@prisma/client/runtime/library";
 import { PrismaClient as MongoClient, Prisma } from "../prisma/generated/mongo_client";
 import { PrismaClient as PostgresClient } from "../prisma/generated/postgres_client";
-import redis, { RedisClientOptions, RedisFunctions, RedisModules, RedisScripts } from 'redis'
 import { createClient } from 'redis';
 
 import pkg from 'pg'
@@ -23,10 +22,6 @@ redisClient = await createClient()
 await redisClient.set('key', 'bobo');
 const value = await redisClient.get('key');
 console.log(value);
-// export const redisClient = redis.createClient({
-//     host: "127.0.0.1",
-//     port: 6379
-// } as RedisClientOptions<RedisModules, RedisFunctions, RedisScripts>) as any
 
 const { Pool } = pkg
 
