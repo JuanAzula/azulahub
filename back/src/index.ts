@@ -8,7 +8,7 @@ import seriesRoutes from './routes/series.routes'
 import moviesRoutes from './routes/movies.routes'
 import loginRoutes from './routes/login.route'
 import userRoutes from './routes/user.routes'
-import fileuploadRoutes from './routes/fileupload.routes'
+import uploadRoutes from './routes/upload.routes'
 
 const app = express()
 
@@ -33,7 +33,7 @@ app.use('/api', seriesRoutes)
 app.use('/api', moviesRoutes)
 app.use('/api', loginRoutes)
 app.use('/api', userRoutes)
-app.use('/api', fileuploadRoutes)
+app.use('/api', uploadRoutes)
 
 const PORT = env.PORT || 3333
 const server = app.listen(PORT, () =>

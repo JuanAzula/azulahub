@@ -1,3 +1,5 @@
+import { MovieForm } from "./MovieForm";
+
 interface HomeProps {
     user: any;
     movies: any;
@@ -17,6 +19,7 @@ export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
             {series?.map((series: any) => (
                 <h2 key={series?.id}>{series?.title}</h2>
             ))}
+            <MovieForm />
         </div>
     )
 }

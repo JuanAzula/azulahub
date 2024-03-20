@@ -1,16 +1,12 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from 'fs-extra';
-import { Router } from "express";
-import { Request } from 'express';
+import { Request } from "express";
 
 interface CustomRequest extends Request {
     files: any; // Add the 'files' property to the type definition
 }
 
-
-const router: Router = Router();
-
-router.post('/upload', async (req: CustomRequest, res) => {
+async function uploadFile(req: CustomRequest, res) {
     try {
         const file = req.files?.file;
         if (!file) {
@@ -18,13 +14,15 @@ router.post('/upload', async (req: CustomRequest, res) => {
         }
 
         const result = await cloudinary.uploader.upload(file.tempFilePath);
+        console.log('result', result)
         await fs.unlink(file.tempFilePath);
+        console.log('tras fs')
 
-        res.send(result.secure_url);
+        res.redirect('http://localhost:5173/');
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
     }
-});
+}
 
-export default router;
+export { uploadFile }
