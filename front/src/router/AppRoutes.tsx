@@ -106,7 +106,7 @@ export const AppRoutes = () => {
                                 <Home user={queryUserLogged.data} movies={queryMovies.data} series={querySeries.data} />
                             )
                             : (
-                                <Login queryUserLogged={queryUserLogged} setUser={setUser} />
+                                <Login />
                             )
                     }
                 />

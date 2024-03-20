@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let token = null
+let token: string | null = null
 
 const BASE_URL = 'http://localhost:3333/api/login/valid'
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import LoginService from '../services/LoginService'
 import { TokenService } from '../services/TokenService'
 
-export const Login = (queryUserLogged: any, setUser: any) => {
+export const Login = () => {
     // const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [passwordError, setPasswordError] = useState('')
     const [emailError, setEmailError] = useState('')
