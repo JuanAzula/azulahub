@@ -43,8 +43,7 @@ async function uploadFile(req: CustomRequest, res) {
         console.log('result', result)
         await fs.unlink(file.tempFilePath);
         console.log('tras fs')
-
-        res.redirect('http://localhost:5173/');
+        res.status(200).json({ url: result.secure_url });
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');

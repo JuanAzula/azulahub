@@ -26,8 +26,8 @@ class MovieService {
                 Authorization: token
             }
         }
-        delete movie.id // borramos el id porque el id se crea aleatoriamente y no lo deberíamos escoger nosotros
-        const response = await axios.post('http://localhost:3002/api/Movie', movie, config) // el método post de axios envia el Movie al servidor database, el primer parámetro especifica el servidor
+        delete movie?.id // borramos el id porque el id se crea aleatoriamente y no lo deberíamos escoger nosotros
+        const response = await axios.post(URL_MOVIES, movie, config) // el método post de axios envia el Movie al servidor database, el primer parámetro especifica el servidor
         return response.data // retornamos los Movies
     }
 

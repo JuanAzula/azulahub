@@ -13,6 +13,9 @@ export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
             {movies?.map((movie: any) => (
                 <div key={movie?.id}>
                     <h2 >{movie?.title}</h2>
+                    <p>{movie?.description}</p>
+                    <p>{movie?.releaseYear}</p>
+                    <p>{movie?.score}</p>
                     <img src={movie?.poster_img} alt="" style={{ width: '200px' }} />
                 </div>
             ))}

@@ -4,12 +4,12 @@ import { redisClient } from '../prismaClient.ts'
 
 
 async function getMovies(req, res) {
-  const moviesInRedis = await redisClient.get('movies')
-  if (moviesInRedis) {
-    console.log('moviesInRedis', moviesInRedis)
-    res.json(JSON.parse(moviesInRedis))
-    return
-  }
+  // const moviesInRedis = await redisClient.get('movies')
+  // if (moviesInRedis) {
+  //   console.log('moviesInRedis', moviesInRedis)
+  //   res.json(JSON.parse(moviesInRedis))
+  //   return
+  // }
   const movies = await prisma.Movies.findMany()
   if (!movies) {
     res.status(404).json({ message: 'No movies found' })
@@ -27,6 +27,14 @@ async function getMovies(req, res) {
 
 async function getMovie(req, res) {
   const { id } = req.params
+
+  const movieInRedis = await redisClient.get('movies:' + id)
+  if (movieInRedis) {
+    console.log('movieInRedis', movieInRedis)
+    res.json(JSON.parse(movieInRedis))
+    return
+  }
+
   const movie = await prisma.movies.findUnique({ where: { id: id } })
   res.json(movie)
 }
@@ -67,18 +75,33 @@ async function createMovie(req, res) {
     return res.status(401).json({ error: 'decoded token missing' })
   }
 
+  try {
 
-  const newMovie = await prisma.movies.create({
-    data: {
-      title,
-      description,
-      releaseYear,
-      poster_img,
-      genresId,
-      score
+    const newMovie = await prisma.movies.create({
+      data: {
+        title,
+        description,
+        releaseYear,
+        poster_img,
+        genresId,
+        score
+      }
+    })
+    // Add the movie to Redis
+    const moviesInRedis = await redisClient.get('movies')
+    let movies = []
+    if (moviesInRedis) {
+      movies = JSON.parse(moviesInRedis)
     }
-  })
-  res.json(newMovie)
+    movies.push(newMovie)
+    await redisClient.set('movies', JSON.stringify(movies))
+    redisClient.expire('movies', 60 * 60 * 24);
+
+    res.json(newMovie)
+  } catch (e) {
+    console.log('Error creating new movie', e)
+    res.status(500).json({ error: 'Error creating new movie' })
+  }
 }
 
 async function deleteMovie(req, res) {
@@ -105,6 +128,15 @@ async function deleteMovie(req, res) {
 
   const movie = await prisma.movies.delete({ where: { id: id } })
   res.json(movie)
+
+  try {
+    const movies = await redisClient.get('movies')
+    const moviesFiltered = JSON.parse(movies).filter((movie) => movie.id !== id)
+    await redisClient.set('movies', JSON.stringify(moviesFiltered))
+  }
+  catch (err) {
+    console.log('error deleting movie from redis', err)
+  }
 }
 
 async function updateMovie(req, res) {
@@ -151,6 +183,15 @@ async function updateMovie(req, res) {
   } catch (error) {
     console.error('Error updating movie:', error)
     res.status(500).json({ error: 'Error updating movie' })
+  }
+
+  try {
+    const movies = await redisClient.get('movies')
+    const moviesUpdated = JSON.parse(movies).filter((movie) => movie.id !== id)
+    await redisClient.set('movies', JSON.stringify(moviesUpdated))
+  }
+  catch (err) {
+    console.log('error deleting movie from redis', err)
   }
 }
 
