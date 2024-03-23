@@ -3,7 +3,7 @@ import { loginUser, validLogin } from "../controllers/login.controller.ts";
 
 const router: Router = Router();
 
-router.get("/login", (req, res) => {
+router.get("/login", (_req, res) => {
     res.send("login")
 })
 router.post("/login/valid", validLogin)

@@ -9,6 +9,9 @@ import moviesRoutes from './routes/movies.routes'
 import loginRoutes from './routes/login.route'
 import userRoutes from './routes/user.routes'
 import uploadRoutes from './routes/upload.routes'
+import helmet from 'helmet';
+import morgan from 'morgan';
+
 
 const app = express()
 
@@ -16,6 +19,10 @@ app.use(cors())
 app.options('*', cors())
 
 app.use(responseTime())
+
+app.use(helmet());
+app.use(morgan('dev'))
+
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())

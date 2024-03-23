@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { prismaClient as prisma } from '../prismaClient'
+import { Request, Response } from 'express'
 
 
 
-async function loginUser(request, response) {
-    const { body } = request
+
+async function loginUser(req: Request, response: Response) {
+    const { body } = req
     const { username: email, password } = body
     if (!email || !password) {
         response.status(401).json({
@@ -38,7 +40,7 @@ async function loginUser(request, response) {
 
     const token = jwt.sign(
         userForToken,
-        process.env.SECRET,
+        process.env.SECRET ?? 'default-secret',
         {
             expiresIn: 60 * 60 * 24
         }
@@ -51,11 +53,14 @@ async function loginUser(request, response) {
     })
 }
 
-async function validLogin(request, response) {
-    const { body } = request
+async function validLogin(req: Request, response: Response) {
+    const { body } = req
     console.log('body', body)
     const { token } = body
     try {
+        if (!process.env.SECRET) {
+            throw new Error('Missing SECRET environment variable');
+        }
         jwt.verify(token, process.env.SECRET)
         response.send(true)
         console.log('login validated')

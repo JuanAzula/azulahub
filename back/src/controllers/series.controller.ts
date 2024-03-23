@@ -1,9 +1,11 @@
 import { prismaClient as prisma } from '../prismaClient.ts'
 import jwt from 'jsonwebtoken'
 import { redisClient } from '../prismaClient.ts'
+import { Request, Response } from 'express'
 
 
-async function getSeries(req, res) {
+
+async function getSeries(_req: Request, res: Response) {
     const seriesInRedis = await redisClient.get('series')
     if (seriesInRedis) {
         console.log('seriesInRedis', seriesInRedis)
@@ -24,13 +26,13 @@ async function getSeries(req, res) {
     res.json(series)
 }
 
-async function getOneSeries(req, res) {
+async function getOneSeries(req: Request, res: Response) {
     const { id } = req.params
     const series = await prisma.series.findUnique({ where: { id: id } })
     res.json(series)
 }
 
-async function createSeries(req, res) {
+async function createSeries(req: Request, res: Response) {
     const {
         title,
         description,
@@ -54,6 +56,9 @@ async function createSeries(req, res) {
     }
     try {
         console.log('token', token)
+        if (!process.env.SECRET) {
+            throw new Error('Missing SECRET environment variable');
+        }
         console.log('process.env.SECRET', process.env.SECRET)
         decodedToken = jwt.verify(token, process.env.SECRET)
         console.log('decodedToken', decodedToken)
@@ -80,7 +85,7 @@ async function createSeries(req, res) {
     res.json(newSeries)
 }
 
-async function deleteSeries(req, res) {
+async function deleteSeries(req: Request, res: Response) {
     const { id } = req.params
     console.log('entro en delete movie', 'id')
 
@@ -90,9 +95,15 @@ async function deleteSeries(req, res) {
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7)
     }
+    if (!token || token === null) {
+        return res.status(401).json({ error: 'token missing or invalid' })
+    }
 
     let decodedToken = {}
     try {
+        if (!process.env.SECRET) {
+            throw new Error('Missing SECRET environment variable');
+        }
         decodedToken = jwt.verify(token, process.env.SECRET)
     } catch (err) {
         return res.status(401).json({ error: 'token missing or invalid' })
@@ -106,7 +117,7 @@ async function deleteSeries(req, res) {
     res.json(series)
 }
 
-async function updateSeries(req, res) {
+async function updateSeries(req: Request, res: Response) {
     const { id } = req.params
     const { title, description, releaseYear, poster_img, genresId, score } = req.body
 
@@ -116,9 +127,15 @@ async function updateSeries(req, res) {
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7)
     }
+    if (!token || token === null) {
+        return res.status(401).json({ error: 'token missing or invalid' })
+    }
 
     let decodedToken = {}
     try {
+        if (!process.env.SECRET) {
+            throw new Error('Missing SECRET environment variable');
+        }
         decodedToken = jwt.verify(token, process.env.SECRET)
     } catch (err) {
         return res.status(401).json({ error: 'token missing or invalid' })

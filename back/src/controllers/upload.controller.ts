@@ -1,13 +1,15 @@
 import { v2 as cloudinary } from 'cloudinary';
 import jwt from 'jsonwebtoken';
 import fs from 'fs-extra';
-import { Request } from "express";
+import { Request, Response } from 'express'
+
+
 
 interface CustomRequest extends Request {
     files: any; // Add the 'files' property to the type definition
 }
 
-async function uploadFile(req: CustomRequest, res) {
+async function uploadFile(req: CustomRequest, res: Response) {
     const authorization = req.get('authorization')
     console.log('authorization in upload', authorization)
     let token = null
@@ -22,6 +24,9 @@ async function uploadFile(req: CustomRequest, res) {
     }
     try {
         console.log('token', token)
+        if (!process.env.SECRET) {
+            throw new Error('Missing SECRET environment variable');
+        }
         console.log('process.env.SECRET', process.env.SECRET)
         decodedToken = jwt.verify(token, process.env.SECRET)
         console.log('decodedToken', decodedToken)

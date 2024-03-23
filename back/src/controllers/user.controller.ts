@@ -1,23 +1,24 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt';
 import { prismaClient as prisma } from '../prismaClient'
-import { redisClient } from '../prismaClient'
+import { Request, Response } from 'express'
 
 
-async function getUser(request, response) {
+
+async function getUser(_req: Request, res: Response) {
     console.log('entro en la petición get')
-    const users = await prisma.user.findMany()
-    response.json(users)
+    const users = await prisma.users.findMany()
+    res.json(users)
 }
 
-async function getUserById(request, response) {
-    const { id } = request.params
+async function getUserById(req: Request, res: Response) {
+    const { id } = req.params
     const user = await prisma.users.findUnique({ where: { id: id } })
-    response.json(user)
+    res.json(user)
 }
 
-async function createUser(request, response) {
-    const { body } = request
+async function createUser(req: Request, res: Response) {
+    const { body } = req
     const { email, name, password } = body
     // console.log('entro en la petición post', email, name, password)
     try {
@@ -34,18 +35,18 @@ async function createUser(request, response) {
         })
 
 
-        response.status(201).json(newUser)
+        res.status(201).json(newUser)
     }
     catch (err) {
         console.error('Error creating user:', err);
-        response.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
-async function deleteUser(request, response) {
-    const { id } = request.params
+async function deleteUser(req: Request, res: Response) {
+    const { id } = req.params
     const user = await prisma.users.delete({ where: { id: id } })
-    response.json(user)
+    res.json(user)
 }
 
 export {

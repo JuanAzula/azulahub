@@ -1,16 +1,18 @@
 import { prismaClient as prisma } from '../prismaClient.ts'
 import jwt from 'jsonwebtoken'
 import { redisClient } from '../prismaClient.ts'
+import { Request, Response } from 'express'
 
 
-async function getMovies(req, res) {
-  // const moviesInRedis = await redisClient.get('movies')
-  // if (moviesInRedis) {
-  //   console.log('moviesInRedis', moviesInRedis)
-  //   res.json(JSON.parse(moviesInRedis))
-  //   return
-  // }
-  const movies = await prisma.Movies.findMany()
+
+async function getMovies(_req: Request, res: Response) {
+  const moviesInRedis = await redisClient.get('movies')
+  if (moviesInRedis) {
+    console.log('moviesInRedis', moviesInRedis)
+    res.json(JSON.parse(moviesInRedis))
+    return
+  }
+  const movies = await prisma.movies.findMany()
   if (!movies) {
     res.status(404).json({ message: 'No movies found' })
     return
@@ -25,7 +27,7 @@ async function getMovies(req, res) {
   res.json(movies)
 }
 
-async function getMovie(req, res) {
+async function getMovie(req: Request, res: Response) {
   const { id } = req.params
 
   const movieInRedis = await redisClient.get('movies:' + id)
@@ -39,7 +41,7 @@ async function getMovie(req, res) {
   res.json(movie)
 }
 
-async function createMovie(req, res) {
+async function createMovie(req: Request, res: Response) {
   const {
     title,
     description,
@@ -63,6 +65,9 @@ async function createMovie(req, res) {
   }
   try {
     console.log('token', token)
+    if (!process.env.SECRET) {
+      throw new Error('Missing SECRET environment variable');
+    }
     console.log('process.env.SECRET', process.env.SECRET)
     decodedToken = jwt.verify(token, process.env.SECRET)
     console.log('decodedToken', decodedToken)
@@ -104,7 +109,7 @@ async function createMovie(req, res) {
   }
 }
 
-async function deleteMovie(req, res) {
+async function deleteMovie(req: Request, res: Response) {
   const { id } = req.params
   console.log('entro en delete movie', 'id')
 
@@ -114,9 +119,14 @@ async function deleteMovie(req, res) {
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
     token = authorization.substring(7)
   }
-
+  if (!token || token === null) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
   let decodedToken = {}
   try {
+    if (!process.env.SECRET) {
+      throw new Error('Missing SECRET environment variable');
+    }
     decodedToken = jwt.verify(token, process.env.SECRET)
   } catch (err) {
     return res.status(401).json({ error: 'token missing or invalid' })
@@ -131,7 +141,10 @@ async function deleteMovie(req, res) {
 
   try {
     const movies = await redisClient.get('movies')
-    const moviesFiltered = JSON.parse(movies).filter((movie) => movie.id !== id)
+    if (!movies) {
+      return
+    }
+    const moviesFiltered = JSON.parse(movies).filter((movie: { id: string }) => movie.id !== id)
     await redisClient.set('movies', JSON.stringify(moviesFiltered))
   }
   catch (err) {
@@ -139,7 +152,7 @@ async function deleteMovie(req, res) {
   }
 }
 
-async function updateMovie(req, res) {
+async function updateMovie(req: Request, res: Response) {
   const { id } = req.params
   const { title, description, releaseYear, poster_img, genresId, score } = req.body
 
@@ -150,8 +163,15 @@ async function updateMovie(req, res) {
     token = authorization.substring(7)
   }
 
+  if (!token || token === null) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
+
   let decodedToken = {}
   try {
+    if (!process.env.SECRET) {
+      throw new Error('Missing SECRET environment variable');
+    }
     decodedToken = jwt.verify(token, process.env.SECRET)
   } catch (err) {
     return res.status(401).json({ error: 'token missing or invalid' })
@@ -187,7 +207,10 @@ async function updateMovie(req, res) {
 
   try {
     const movies = await redisClient.get('movies')
-    const moviesUpdated = JSON.parse(movies).filter((movie) => movie.id !== id)
+    if (!movies) {
+      return
+    }
+    const moviesUpdated = JSON.parse(movies).filter((movie: { id: string }) => movie.id !== id)
     await redisClient.set('movies', JSON.stringify(moviesUpdated))
   }
   catch (err) {

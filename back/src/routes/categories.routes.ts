@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const router: Router = Router();
 
-router.get("/categories", (req, res) => {
+router.get("/categories", (_req, res) => {
     res.send("categories")
 })
 
