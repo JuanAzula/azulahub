@@ -37,6 +37,7 @@ class MovieService {
                 Authorization: token
             }
         }
+        console.log('movie in movieservice', movie)
         const response = await axios.patch(URL_MOVIES + '/' + movie.id, movie, config) // lo mismo, pero con otra mecánica, los valores que no cambias en lugar de borrarse, se mantienen
         return response.data
     }

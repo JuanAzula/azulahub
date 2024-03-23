@@ -1,24 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { UploadService } from "../services/UploadService"
 import { token } from "../services/TokenService";
 import { MovieService } from "../services/MovieService";
 
 
 
-export const MovieForm = () => {
-    const [file, setFile] = useState<File | null>(null);
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [year, setYear] = useState(Number);
-    const [img, setImg] = useState('');
-    const [genre, setGenre] = useState('');
-    const [score, setScore] = useState<string>();
+export const MovieForm = (currentMovie: any, setMovie: any) => {
+    console.log('movie in movieform', currentMovie)
+    const [file, setFile] = useState<File | null>(currentMovie?.movie?.file || null);
+    const [title, setTitle] = useState(currentMovie?.movie?.title || '');
+    const [description, setDescription] = useState(currentMovie?.movie?.description || '');
+    const [year, setYear] = useState(currentMovie?.movie?.releaseYear || Number);
+    const [img, setImg] = useState(currentMovie?.movie?.poster_img || '');
+    const [genre, setGenre] = useState(currentMovie?.movie?.genresId || '');
+    const [score, setScore] = useState<string>(currentMovie?.movie?.score || '0');
 
+    useEffect(() => {
+        setFile(currentMovie?.movie?.file || null)
+        setTitle(currentMovie?.movie?.title || '')
+        setDescription(currentMovie?.movie?.description || '')
+        setYear(currentMovie?.movie?.releaseYear || Number)
+        setImg(currentMovie?.movie?.poster_img || '')
+        setGenre(currentMovie?.movie?.genresId || '')
+        setScore(currentMovie?.movie?.score || '0')
+    }, [currentMovie])
+    console.log('img', currentMovie?.movie?.poster_img)
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
             setFile(event.target.files[0]);
         }
+    };
+
+    const handleCancel = () => {
+        setMovie(null);
     };
 
     const handleUpload = async (event: React.FormEvent) => {
@@ -42,23 +57,41 @@ export const MovieForm = () => {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        const movie = {
-            title,
-            description,
-            releaseYear: year,
-            poster_img: img,
-            genresId: genre,
-            score: parseFloat(score || '0')
-        };
-        MovieService.postMovie(movie, { token })
-        window.location.reload()
-        console.log(movie);
+        if (currentMovie?.movie?.id) {
+            const movie = {
+                id: currentMovie?.movie?.id,
+                title,
+                description,
+                releaseYear: year,
+                poster_img: img,
+                genresId: genre,
+                score: parseFloat(score || '0')
+            }
+            MovieService.patchMovie(movie, { token })
+            setTimeout(() => {
+                window.location.reload()
+            }, 150)
+        } else {
+
+            const movie = {
+                title,
+                description,
+                releaseYear: year,
+                poster_img: img,
+                genresId: genre,
+                score: parseFloat(score || '0')
+            };
+            MovieService.postMovie(movie, { token })
+            setTimeout(() => {
+                window.location.reload()
+            }, 150)
+        }
     }
 
     return (
         <div className="flex justify-center items-center flex-col space-y-4 absolute left-1/3 top-1/3">
             <h1 className="text-2xl text-green-500">Add a movie</h1>
-            <form onSubmit={handleSubmit} className="flex flex-col space-y-14 text-black">
+            <form className="flex flex-col space-y-14 text-black">
                 <input type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -90,7 +123,8 @@ export const MovieForm = () => {
                     <input type="file" name="file" onChange={handleFileChange} />
                     <span onClick={handleUpload} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm</span>
                 </div>
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+                <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
+                <button onClick={handleCancel} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
             </form>
         </div>
     )

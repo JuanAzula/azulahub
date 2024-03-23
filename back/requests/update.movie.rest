@@ -1,9 +1,9 @@
 PATCH http://localhost:3333/api/movies/65f31881fd25437e379a420c
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDA5ODMsImV4cCI6MTcxMTEwNTc4M30.qFH1xfwtWn-5Zrrx2V-xHuNdBcdMRhOY7sWW-431ewA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJpYXQiOjE3MTEyMjk5NTQsImV4cCI6MTcxMTMxNjM1NH0.uu2ntVMnZ5xOUQOvMpMCEVm_zsfSNLFAFlS4w6BK4vw
 
 {
 
-  "releaseYear": 2037
+  "releaseYear": 2033
 
 }

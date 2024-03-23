@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { MovieForm } from "./MovieForm";
+import { MovieService } from "../services/MovieService";
+import { token } from "../services/TokenService";
+
 
 interface HomeProps {
     user: any;
@@ -6,6 +10,9 @@ interface HomeProps {
     series: any;
 }
 export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
+    const [currentMovie, setCurrentMovie] = useState(null)
+
+    console.log('currentMovie', currentMovie)
     return (
         <div>
             <h1 className="text-2xl text-green-500" >{user.name}</h1>
@@ -16,13 +23,16 @@ export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
                     <p>{movie?.description}</p>
                     <p>{movie?.releaseYear}</p>
                     <p>{movie?.score}</p>
-                    <img src={movie?.poster_img} alt="" style={{ width: '200px' }} />
+                    <button className="text-red-500" onClick={() => MovieService.deleteMovie(movie?.id, { token })}>Delete</button>
+                    <br />
+                    <button className="text-blue-500" onClick={() => setCurrentMovie(movie)}>Edit</button>
+                    <img onClick={() => setCurrentMovie(movie)} src={movie?.poster_img} alt="" style={{ width: '200px' }} />
                 </div>
             ))}
             {series?.map((series: any) => (
                 <h2 key={series?.id}>{series?.title}</h2>
             ))}
-            <MovieForm />
+            <MovieForm movie={currentMovie} setMovie={setCurrentMovie} />
         </div>
     )
 }

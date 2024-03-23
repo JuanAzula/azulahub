@@ -199,22 +199,17 @@ async function updateMovie(req: Request, res: Response) {
         score: score || movie.score
       }
     })
-    res.json(updatedMovie)
-  } catch (error) {
-    console.error('Error updating movie:', error)
-    res.status(500).json({ error: 'Error updating movie' })
-  }
-
-  try {
     const movies = await redisClient.get('movies')
     if (!movies) {
       return
     }
     const moviesUpdated = JSON.parse(movies).filter((movie: { id: string }) => movie.id !== id)
+    moviesUpdated.push(updatedMovie)
     await redisClient.set('movies', JSON.stringify(moviesUpdated))
+    res.json(updatedMovie)
   }
   catch (err) {
-    console.log('error deleting movie from redis', err)
+    console.log('error updating movie from redis', err)
   }
 }
 
