@@ -9,7 +9,7 @@ interface CustomRequest extends Request {
     files: any; // Add the 'files' property to the type definition
 }
 
-async function uploadFile(req: CustomRequest, res: Response) {
+async function postFile(req: CustomRequest | Request, res: Response) {
     const authorization = req.get('authorization')
     console.log('authorization in upload', authorization)
     let token = null
@@ -55,4 +55,4 @@ async function uploadFile(req: CustomRequest, res: Response) {
     }
 }
 
-export { uploadFile }
+export { postFile }
