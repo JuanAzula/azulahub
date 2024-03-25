@@ -70,7 +70,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
             MovieService.patchMovie(movie, { token })
             setTimeout(() => {
                 window.location.reload()
-            }, 150)
+            }, 250)
         } else {
 
             const movie = {
@@ -84,7 +84,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
             MovieService.postMovie(movie, { token })
             setTimeout(() => {
                 window.location.reload()
-            }, 150)
+            }, 250)
         }
     }
 
