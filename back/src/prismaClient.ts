@@ -2,10 +2,10 @@ import { DefaultArgs } from "@prisma/client/runtime/library";
 import { PrismaClient as MongoClient, Prisma } from "../prisma/generated/mongo_client";
 import { PrismaClient as PostgresClient } from "../prisma/generated/postgres_client";
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts, createClient } from 'redis';
-
 import pkg from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
+// Cloudinary config
 import { v2 as cloudinary } from 'cloudinary';
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_NAME,
@@ -13,6 +13,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+
+// Redis config
 export let redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
 
 redisClient = await createClient()
@@ -23,6 +25,8 @@ await redisClient.set('key', 'bobo');
 const value = await redisClient.get('key');
 console.log(value);
 
+
+// Prisma config
 const { Pool } = pkg
 
 export const DATA_SOURCE = process.env.DATA_SOURCE ?? "mongo"
@@ -41,9 +45,6 @@ if (DATA_SOURCE === "postgres") {
     console.log('postgresClient')
     prismaClient = postgresClient
 } else {
-    const connectionString = `${process.env.MONGO_URL}`
-    const pool = new Pool({ connectionString })
-    const adapter = new PrismaPg(pool)
     const mongoClient: ClientMongo = new MongoClient();
     console.log('mongoClient')
     prismaClient = mongoClient
