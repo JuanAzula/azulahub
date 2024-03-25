@@ -26,6 +26,10 @@ const getMovies = () => {
     const movies = MovieService.getMovies()
     if (movies) {
         return movies
+    } else {
+        setTimeout(() => {
+            getMovies()
+        }, 1000)
     }
 }
 
@@ -33,6 +37,10 @@ const getSeries = () => {
     const series = SeriesService.getSeries()
     if (series) {
         return series
+    } else {
+        setTimeout(() => {
+            getSeries()
+        }, 1000)
     }
 }
 

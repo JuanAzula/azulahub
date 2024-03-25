@@ -155,7 +155,7 @@ async function deleteMovie(req: Request, res: Response) {
 async function updateMovie(req: Request, res: Response) {
   const { id } = req.params
   const { title, description, releaseYear, poster_img, genresId, score } = req.body
-
+  console.log('entro en update movie', 'id', id)
   const authorization = req.get('authorization')
   let token = null
 
@@ -166,24 +166,21 @@ async function updateMovie(req: Request, res: Response) {
   if (!token || token === null) {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
-
+  console.log('apunto de caerme')
   let decodedToken = {}
+  if (!process.env.SECRET) {
+    throw new Error('Missing SECRET environment variable');
+  }
   try {
-    if (!process.env.SECRET) {
-      throw new Error('Missing SECRET environment variable');
-    }
     decodedToken = jwt.verify(token, process.env.SECRET)
   } catch (err) {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
-
   if (!token || !decodedToken) {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
-
   try {
     const movie = await prisma.movies.findUnique({ where: { id: id } })
-
     if (!movie) {
       return res.status(404).json({ error: 'movie not found' })
     }
