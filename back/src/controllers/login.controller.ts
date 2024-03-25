@@ -6,11 +6,11 @@ import { Request, Response } from 'express'
 
 
 
-async function loginUser(req: Request, response: Response) {
+async function loginUser(req: Request, res: Response) {
     const { body } = req
     const { username: email, password } = body
     if (!email || !password) {
-        response.status(401).json({
+        res.status(401).json({
             error: 'invalid user or password'
         })
         return
@@ -27,7 +27,7 @@ async function loginUser(req: Request, response: Response) {
             : await bcrypt.compare(password, user.password)
 
     if (!(user && passwordCorrect)) {
-        response.status(401).json({
+        res.status(401).json({
             error: 'invalid user or password'
 
         })
@@ -45,7 +45,7 @@ async function loginUser(req: Request, response: Response) {
             expiresIn: 60 * 60 * 24
         }
     )
-    response.send({
+    res.send({
         name: user.name,
         email: user.email,
         id: user._id,
@@ -53,7 +53,7 @@ async function loginUser(req: Request, response: Response) {
     })
 }
 
-async function validLogin(req: Request, response: Response) {
+async function validLogin(req: Request, res: Response) {
     const { body } = req
     console.log('body', body)
     const { token } = body
@@ -62,10 +62,10 @@ async function validLogin(req: Request, response: Response) {
             throw new Error('Missing SECRET environment variable');
         }
         jwt.verify(token, process.env.SECRET)
-        response.send(true)
+        res.status(200)
         console.log('login validated')
     } catch (error) {
-        response.send(false)
+        res.send(201)
     }
 }
 
