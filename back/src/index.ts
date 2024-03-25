@@ -11,9 +11,11 @@ import userRoutes from './routes/user.routes'
 import uploadRoutes from './routes/upload.routes'
 import helmet from 'helmet';
 import morgan from 'morgan';
+import pino from 'pino';
 
 
 const app = express()
+const logger = pino()
 
 app.use(cors())
 app.options('*', cors())
@@ -44,5 +46,5 @@ app.use('/api', uploadRoutes)
 
 const PORT = env.PORT || 3333
 const server = app.listen(PORT, () =>
-    console.log(`[server]: Server is running at http://localhost:${PORT}`)
+    logger.info(`[server]: Server is running at http://localhost:${PORT}`)
 )
