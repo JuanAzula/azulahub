@@ -3,19 +3,17 @@ import { env } from 'process'
 import fileUpload from 'express-fileupload';
 import cors from 'cors'
 import responseTime from 'response-time'
-import categoriesRoutes from './routes/categories.routes'
-import seriesRoutes from './routes/series.routes'
-import moviesRoutes from './routes/movies.routes'
-import loginRoutes from './routes/login.route'
-import userRoutes from './routes/user.routes'
-import uploadRoutes from './routes/upload.routes'
+import categoriesRoutes from './routes/categories.routes.ts'
+import seriesRoutes from './routes/series.routes.ts'
+import moviesRoutes from './routes/movies.routes.ts'
+import loginRoutes from './routes/login.route.ts'
+import userRoutes from './routes/user.routes.ts'
+import uploadRoutes from './routes/upload.routes.ts'
 import helmet from 'helmet';
 import morgan from 'morgan';
-import pino from 'pino';
 
 
 const app: Application = express()
-export const logger = pino()
 
 app.use(cors())
 app.options('*', cors())
