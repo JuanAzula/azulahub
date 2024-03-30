@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { postFile } from '../controllers/upload.controller';
+import { postFile } from '../controllers/upload.controller.ts';
 
 
 

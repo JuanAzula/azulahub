@@ -1,5 +1,5 @@
 // import { getMovies } from "../controllers/movies.controller";
-import app from "../server";
+import app from "../app.ts";
 import request from "supertest";
 
 describe('movies petitions', () => {
