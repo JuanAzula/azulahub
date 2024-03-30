@@ -16,6 +16,7 @@ class TokenService {
                 console.log('Token is valid', response);
                 return true; // Token is valid
             } else {
+                console.log('Token is invalid', response);
                 return false; // Token is invalid
             }
         } catch (error) {

@@ -63,6 +63,7 @@ export const AppRoutes = () => {
     })
     console.log(querySeries.data)
 
+
     const [user, setUser] = useState<User | null>(null)
     console.log(user)
 
@@ -72,12 +73,18 @@ export const AppRoutes = () => {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
             TokenService.setToken(user.token)
+            let count = 0
             const checkTokenValidity = async () => {
                 const isValidToken = await TokenService.validateToken(user.token);
                 console.log('isValidToken', isValidToken)
-                if (!isValidToken) {
+                if (!isValidToken && count < 1) {
                     // Token is invalid, perform logout action
-                    console.log('Token is invalid, perform logout action', isValidToken);
+                    count += 1
+                    setTimeout(() => {
+                        checkTokenValidity()
+                    }, 2000)
+                } else if (!isValidToken && count >= 1) {
+                    alert('Token is invalid, perform logout action');
                     HandleLogout();
                 }
             };
