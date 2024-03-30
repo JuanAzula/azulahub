@@ -1,7 +1,7 @@
 import { DefaultArgs } from "@prisma/client/runtime/library";
 import { PrismaClient as MongoClient, Prisma } from "../prisma/generated/mongo_client";
 import { PrismaClient as PostgresClient } from "../prisma/generated/postgres_client";
-import { RedisClientType, RedisFunctions, RedisModules, RedisScripts, createClient } from 'redis';
+
 import pkg from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
@@ -14,16 +14,7 @@ cloudinary.config({
 });
 
 
-// Redis config
-export let redisClient: RedisClientType<RedisModules, RedisFunctions, RedisScripts>;
 
-redisClient = await createClient()
-    .on('error', err => console.log('Redis Client Error', err))
-    .connect();
-
-await redisClient.set('key', 'bobo');
-const value = await redisClient.get('key');
-console.log(value);
 
 
 // Prisma config
