@@ -1,4 +1,4 @@
-import { prismaClient as prisma } from '../prismaClient.ts'
+import { prismaClient as prisma } from '../client/prismaClient.ts'
 import jwt from 'jsonwebtoken'
 import { redisClient } from '../client/redisClient.ts'
 import { Request, Response } from 'express'
