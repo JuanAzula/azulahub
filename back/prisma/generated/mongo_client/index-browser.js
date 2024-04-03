@@ -17,11 +17,11 @@ exports.$Enums = {}
 
 /**
  * Prisma Client JS version: 5.11.0
- * Query Engine version: efd2449663b3d73d637ea1fd226bafbcf45b3102
+ * Query Engine version: 473ed3124229e22d881cb7addf559799debae1ab
  */
 Prisma.prismaVersion = {
   client: "5.11.0",
-  engine: "efd2449663b3d73d637ea1fd226bafbcf45b3102"
+  engine: "473ed3124229e22d881cb7addf559799debae1ab"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -125,9 +125,9 @@ exports.Prisma.MoviesScalarFieldEnum = {
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genresId: 'genresId',
+  genresName: 'genresName',
   score: 'score',
-  usersId: 'usersId'
+  authorEmail: 'authorEmail'
 };
 
 exports.Prisma.SeriesScalarFieldEnum = {
@@ -136,9 +136,9 @@ exports.Prisma.SeriesScalarFieldEnum = {
   description: 'description',
   releaseYear: 'releaseYear',
   poster_img: 'poster_img',
-  genresId: 'genresId',
+  genresName: 'genresName',
   score: 'score',
-  usersId: 'usersId'
+  authorEmail: 'authorEmail'
 };
 
 exports.Prisma.GenresScalarFieldEnum = {

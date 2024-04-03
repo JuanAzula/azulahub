@@ -12,7 +12,7 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
     const [currentMovie, setCurrentMovie] = useState(null)
 
-    console.log('currentMovie', currentMovie)
+    console.log('currentMovie', movies)
     return (
         <div>
             <h1 className="text-2xl text-green-500" >{user.name}</h1>

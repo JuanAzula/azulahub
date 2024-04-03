@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "generate mongo": "pnpx prisma generate --schema=./prisma/mongo.prisma",
-    "generate postgres": "pnpx prisma generate --schema=./prisma/postgres.prisma",
-    "migrate postgres": "pnpx prisma migrate dev --schema=./prisma/postgres.prisma"
+    "generate-mongo": "pnpx prisma generate --schema=./prisma/mongo.prisma",
+    "generate-postgres": "pnpx prisma generate --schema=./prisma/postgres.prisma",
+    "migrate-postgres": "pnpx prisma migrate dev --schema=./prisma/postgres.prisma"
   },
   "keywords": [],
   "author": "",

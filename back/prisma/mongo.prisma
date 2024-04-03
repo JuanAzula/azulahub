@@ -21,34 +21,34 @@ model Users {
 }
 
 model Movies {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
     title       String
     description String
     releaseYear Int
     poster_img  String
-    genres      Genres[]
+    genres      Genres @relation(fields: [genresName], references: [name])
+    genresName  String
     score       Float
-    Users       Users?   @relation(fields: [usersId], references: [id])
-    usersId     String?  @db.ObjectId
+    authorEmail String
+    author      Users  @relation(fields: [authorEmail], references: [email])
 }
 
 model Series {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
     title       String
     description String
     releaseYear Int
     poster_img  String
-    genres      Genres[]
+    genres      Genres @relation(fields: [genresName], references: [name])
+    genresName  String
     score       Float
-    Users       Users?   @relation(fields: [usersId], references: [id])
-    usersId     String?  @db.ObjectId
+    authorEmail String
+    author      Users  @relation(fields: [authorEmail], references: [email])
 }
 
 model Genres {
-    id       String  @id @default(auto()) @map("_id") @db.ObjectId
-    name     String  @unique
-    Movies   Movies? @relation(fields: [moviesId], references: [id])
-    moviesId String? @db.ObjectId
-    Series   Series? @relation(fields: [seriesId], references: [id])
-    seriesId String? @db.ObjectId
+    id     String   @id @default(auto()) @map("_id") @db.ObjectId
+    name   String   @unique
+    movies Movies[]
+    Series Series[]
 }

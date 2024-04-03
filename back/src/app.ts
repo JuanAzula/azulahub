@@ -9,6 +9,7 @@ import moviesRoutes from './routes/movies.routes.ts'
 import loginRoutes from './routes/login.route.ts'
 import userRoutes from './routes/user.routes.ts'
 import uploadRoutes from './routes/upload.routes.ts'
+import genresRoutes from './routes/genres.routes.ts'
 import helmet from 'helmet';
 import morgan from 'morgan';
 
@@ -41,5 +42,6 @@ app.use('/api', moviesRoutes)
 app.use('/api', loginRoutes)
 app.use('/api', userRoutes)
 app.use('/api', uploadRoutes)
+app.use('/api', genresRoutes)
 
 export default app

@@ -22,25 +22,29 @@ const getUser = () => {
     }
 }
 
-const getMovies = () => {
-    const movies = MovieService.getMovies()
-    if (movies) {
-        return movies
-    } else {
+const getMovies = async () => {
+    const movies = await MovieService.getMovies()
+    console.log('movies', movies)
+    if (movies === null) {
+        console.log('no movies')
         setTimeout(() => {
             getMovies()
-        }, 1000)
+        }, 2500)
     }
+    return movies
+
 }
 
-const getSeries = () => {
-    const series = SeriesService.getSeries()
-    if (series) {
-        return series
-    } else {
+const getSeries = async () => {
+    const series = await SeriesService.getSeries()
+    if (series === null) {
+        console.log('no movies')
         setTimeout(() => {
             getSeries()
-        }, 1000)
+        }, 2500)
+    }
+    if (series !== null) {
+        return series
     }
 }
 
@@ -77,12 +81,15 @@ export const AppRoutes = () => {
             const checkTokenValidity = async () => {
                 const isValidToken = await TokenService.validateToken(user.token);
                 console.log('isValidToken', isValidToken)
-                if (!isValidToken && count < 1) {
+                if (isValidToken) {
+                    count = 0
+                }
+                else if (!isValidToken && count < 1) {
                     // Token is invalid, perform logout action
                     count += 1
                     setTimeout(() => {
                         checkTokenValidity()
-                    }, 2000)
+                    }, 10000)
                 } else if (!isValidToken && count >= 1) {
                     alert('Token is invalid, perform logout action');
                     HandleLogout();
