@@ -10,8 +10,7 @@ class SeriesService {
             const response = await axios.get(URL_SERIES) // recogemos la response del servidor
             return response.data // .data es un método de axios para pasar los Seriess a json
         } catch (err) {
-            alert('No se ha podido obtener los Seriess') // alerta de error preparada en caso de no haber obtenido los Seriess
-            return []
+            return null
         }
     }
 

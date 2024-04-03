@@ -20,7 +20,6 @@ class TokenService {
                 return false; // Token is invalid
             }
         } catch (error) {
-            alert('Error validating token');
             console.error('Error validating token:', error);
             return false; // Error occurred while validating token
         }

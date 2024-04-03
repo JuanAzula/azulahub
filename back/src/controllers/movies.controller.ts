@@ -6,13 +6,20 @@ import { Request, Response } from 'express'
 
 
 async function getMovies(_req: Request, res: Response) {
-  const moviesInRedis = await redisClient.get('movies')
-  if (moviesInRedis) {
-    console.log('moviesInRedis', moviesInRedis)
-    res.json(JSON.parse(moviesInRedis))
-    return
-  }
-  const movies = await prisma.movies.findMany()
+  // const moviesInRedis = await redisClient.get('movies')
+  // if (moviesInRedis) {
+  //   console.log('moviesInRedis', moviesInRedis)
+  //   res.json(JSON.parse(moviesInRedis))
+  //   return
+  // }
+  const movies = await prisma.movies.findMany(
+    {
+      include: {
+        author: true,
+        genres: true
+      }
+    }
+  )
   if (!movies) {
     res.status(404).json({ message: 'No movies found' })
     return
@@ -37,7 +44,13 @@ async function getMovie(req: Request, res: Response) {
     return
   }
 
-  const movie = await prisma.movies.findUnique({ where: { id: id } })
+  const movie = await prisma.movies.findUnique({
+    where: { id: id },
+    include: {
+      author: true,
+      genres: true
+    }
+  })
   res.json(movie)
 }
 
@@ -47,7 +60,8 @@ async function createMovie(req: Request, res: Response) {
     description,
     releaseYear,
     poster_img,
-    genresId,
+    genresName,
+    authorEmail,
     score
   } = req.body
 
@@ -88,10 +102,16 @@ async function createMovie(req: Request, res: Response) {
         description,
         releaseYear,
         poster_img,
-        genresId,
-        score
+        genres: {
+          connect: { name: genresName }
+        },
+        score,
+        author: {
+          connect: { email: authorEmail }
+        }
       }
     })
+
     // Add the movie to Redis
     const moviesInRedis = await redisClient.get('movies')
     let movies = []
@@ -154,7 +174,7 @@ async function deleteMovie(req: Request, res: Response) {
 
 async function updateMovie(req: Request, res: Response) {
   const { id } = req.params
-  const { title, description, releaseYear, poster_img, genresId, score } = req.body
+  const { title, description, releaseYear, poster_img, genresName, score } = req.body
   console.log('entro en update movie', 'id', id)
   const authorization = req.get('authorization')
   let token = null
@@ -192,7 +212,7 @@ async function updateMovie(req: Request, res: Response) {
         description: description || movie.description,
         releaseYear: releaseYear || movie.releaseYear,
         poster_img: poster_img || movie.poster_img,
-        genresId: genresId || movie.genresId,
+        genresName: genresName || movie.genresName,
         score: score || movie.score
       }
     })

@@ -12,7 +12,13 @@ async function getSeries(_req: Request, res: Response) {
         res.json(JSON.parse(seriesInRedis))
         return
     }
-    const series = await prisma.series.findMany()
+    const series = await prisma.series.findMany({
+
+        include: {
+            author: true,
+            genres: true
+        }
+    })
     if (!series) {
         res.status(404).json({ message: 'No series found' })
         return
@@ -28,7 +34,13 @@ async function getSeries(_req: Request, res: Response) {
 
 async function getOneSeries(req: Request, res: Response) {
     const { id } = req.params
-    const series = await prisma.series.findUnique({ where: { id: id } })
+    const series = await prisma.series.findUnique({
+        where: { id: id },
+        include: {
+            author: true,
+            genres: true
+        }
+    })
     res.json(series)
 }
 
@@ -38,7 +50,7 @@ async function createSeries(req: Request, res: Response) {
         description,
         releaseYear,
         poster_img,
-        genresId,
+        genresName,
         score
     } = req.body
 
@@ -78,7 +90,7 @@ async function createSeries(req: Request, res: Response) {
             description,
             releaseYear,
             poster_img,
-            genresId,
+            genresName,
             score
         }
     })
@@ -119,7 +131,7 @@ async function deleteSeries(req: Request, res: Response) {
 
 async function updateSeries(req: Request, res: Response) {
     const { id } = req.params
-    const { title, description, releaseYear, poster_img, genresId, score } = req.body
+    const { title, description, releaseYear, poster_img, genresName, score } = req.body
 
     const authorization = req.get('authorization')
     let token = null
@@ -159,7 +171,7 @@ async function updateSeries(req: Request, res: Response) {
                 description: description || series.description,
                 releaseYear: releaseYear || series.releaseYear,
                 poster_img: poster_img || series.poster_img,
-                genresId: genresId || series.genresId,
+                genresName: genresName || series.genresName,
                 score: score || series.score
             }
         })

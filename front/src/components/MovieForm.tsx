@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { UploadService } from "../services/UploadService"
 import { token } from "../services/TokenService";
 import { MovieService } from "../services/MovieService";
+import { useQueryClient } from '@tanstack/react-query';
 
 
 
@@ -14,6 +15,10 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
     const [img, setImg] = useState(currentMovie?.movie?.poster_img || '');
     const [genre, setGenre] = useState(currentMovie?.movie?.genresId || '');
     const [score, setScore] = useState<string>(currentMovie?.movie?.score || '0');
+
+    const queryClient = useQueryClient();
+
+    const user: User | undefined = queryClient.getQueryData(['userLogged'])
 
     useEffect(() => {
         setFile(currentMovie?.movie?.file || null)
@@ -64,7 +69,8 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 description,
                 releaseYear: year,
                 poster_img: img,
-                genresId: genre,
+                genresName: genre,
+                authorEmail: currentMovie?.movie?.author?.email,
                 score: parseFloat(score || '0')
             }
             MovieService.patchMovie(movie, { token })
@@ -78,7 +84,8 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 description,
                 releaseYear: year,
                 poster_img: img,
-                genresId: genre,
+                genresName: genre,
+                authorEmail: user?.email,
                 score: parseFloat(score || '0')
             };
             MovieService.postMovie(movie, { token })

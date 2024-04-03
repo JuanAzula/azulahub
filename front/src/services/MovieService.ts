@@ -10,8 +10,7 @@ class MovieService {
             const response = await axios.get(URL_MOVIES) // recogemos la response del servidor
             return response.data // .data es un método de axios para pasar los Movies a json
         } catch (err) {
-            alert('No se ha podido obtener los Movies') // alerta de error preparada en caso de no haber obtenido los Movies
-            return []
+            return null
         }
     }
 
