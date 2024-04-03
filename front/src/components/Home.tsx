@@ -23,6 +23,8 @@ export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
                     <p>{movie?.description}</p>
                     <p>{movie?.releaseYear}</p>
                     <p>{movie?.score}</p>
+                    <p>{movie?.author.email}</p>
+                    <p>{movie?.genres.name}</p>
                     <button className="text-red-500" onClick={() => MovieService.deleteMovie(movie?.id, { token })}>Delete</button>
                     <br />
                     <button className="text-blue-500" onClick={() => setCurrentMovie(movie)}>Edit</button>

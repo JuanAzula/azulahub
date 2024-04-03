@@ -12,4 +12,13 @@ describe('movies petitions', () => {
         const movies = await request(app).get('/api/movies').send(mockRequest)
         expect(movies.status).toBe(200)
     })
+    test('getMovie', async () => {
+        const mockRequest = {
+            params: { id: "660d7fd6c0cee288fe57d605" }, // You can add any required properties here
+            query: {}, // You can add query parameters here
+            body: {}, // You can add a request body if needed
+        };
+        const movie = await request(app).get('/api/movies/660d7fd6c0cee288fe57d605')
+        expect(movie.status).toBe(200)
+    })
 })
