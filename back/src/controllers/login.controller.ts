@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { prismaClient as prisma } from '../prismaClient.ts'
+import { prismaClient as prisma } from '../client/prismaClient.ts'
 import { Request, Response } from 'express'
 
 

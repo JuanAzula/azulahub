@@ -1,6 +1,6 @@
 import { DefaultArgs } from "@prisma/client/runtime/library";
-import { PrismaClient as MongoClient, Prisma } from "../prisma/generated/mongo_client/index.js";
-import { PrismaClient as PostgresClient } from "../prisma/generated/postgres_client/index.js";
+import { PrismaClient as MongoClient, Prisma } from "../../prisma/generated/mongo_client/index.js";
+import { PrismaClient as PostgresClient } from "../../prisma/generated/postgres_client/index.js";
 
 import pkg from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
