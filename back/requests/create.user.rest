@@ -2,10 +2,10 @@ POST http://localhost:3333/api/users
 Content-Type: application/json
 
 {
-            "id":"1",
-            "email": "user@example.com",
+            "id":"2",
+            "email": "admin@example.com",
             "password": "123456K*",
-            "name": "juan",
+            "name": "manuel",
             "movies":[],
             "series":[]
 }

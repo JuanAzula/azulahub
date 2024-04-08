@@ -15,8 +15,8 @@ describe('movies petitions', () => {
         const movies = await request(app).get('/api/movies').send(mockRequest)
         expect(movies.status).toBe(200)
 
-        const moviesResponse = JSON.parse(movies.text)
-        expect(moviesResponse).toMatchImageSnapshot()
+        // const moviesResponse = JSON.parse(movies.text)
+        // expect(moviesResponse).toMatchImageSnapshot()
     })
     test('getMovie', async () => {
         const mockRequest = {

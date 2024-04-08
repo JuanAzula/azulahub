@@ -25,6 +25,8 @@ export const DATA_SOURCE = process.env.DATA_SOURCE ?? "mongo"
 type ClientMongo = MongoClient<Prisma.PrismaClientOptions, never, DefaultArgs>
 type ClientPostgres = PostgresClient<Prisma.PrismaClientOptions, never, DefaultArgs>
 
+const mongoConnectionString = process.env.NODE_ENV === "test" ? `${process.env.MONGOTEST_URL}` : `${process.env.MONGO_URL}`
+
 
 export let prismaClient: any
 console.log(DATA_SOURCE)
@@ -36,7 +38,7 @@ if (DATA_SOURCE === "postgres") {
     console.log('postgresClient')
     prismaClient = postgresClient
 } else {
-    const mongoClient: ClientMongo = new MongoClient();
+    const mongoClient: ClientMongo = new MongoClient({ datasources: { db: { url: mongoConnectionString } } });
     console.log('mongoClient')
     prismaClient = mongoClient
 }

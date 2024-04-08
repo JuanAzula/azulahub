@@ -31,11 +31,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 5.11.0
+ * Prisma Client JS version: 5.12.1
  * Query Engine version: 473ed3124229e22d881cb7addf559799debae1ab
  */
 Prisma.prismaVersion = {
-  client: "5.11.0",
+  client: "5.12.1",
   engine: "473ed3124229e22d881cb7addf559799debae1ab"
 }
 
@@ -163,7 +163,7 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../..",
-  "clientVersion": "5.11.0",
+  "clientVersion": "5.12.1",
   "engineVersion": "473ed3124229e22d881cb7addf559799debae1ab",
   "datasourceNames": [
     "db"
@@ -173,13 +173,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "MONGO_URL",
+        "fromEnvVar": "MONGOTEST_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = []\n    output          = \"./generated/mongo_client\"\n}\n\ndatasource db {\n    provider = \"mongodb\"\n    url      = env(\"MONGO_URL\")\n}\n\n// schema.prisma\n\nmodel Users {\n    id       String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    email    String   @unique\n    password String\n    name     String\n    movies   Movies[]\n    series   Series[]\n}\n\nmodel Movies {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Series {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Genres {\n    id     String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    name   String   @unique\n    movies Movies[]\n    Series Series[]\n}\n",
-  "inlineSchemaHash": "348a22cc776481f023c21bfb54dc82911a6e76b61b2b41e9ba9f7254a084fa56",
+  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = []\n    output          = \"./generated/mongo_client\"\n}\n\ndatasource db {\n    provider = \"mongodb\"\n    url      = env(\"MONGOTEST_URL\")\n}\n\n// schema.prisma\n\nmodel Users {\n    id       String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    email    String   @unique\n    password String\n    name     String\n    movies   Movies[]\n    series   Series[]\n}\n\nmodel Movies {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Series {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Genres {\n    id     String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    name   String   @unique\n    movies Movies[]\n    Series Series[]\n}\n",
+  "inlineSchemaHash": "4c5c75f17ab40138d7d34f1a1d34240382ccdf021550d40d4a7a3fb5074b7e76",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -190,7 +190,7 @@ config.engineWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    MONGO_URL: typeof globalThis !== 'undefined' && globalThis['MONGO_URL'] || typeof process !== 'undefined' && process.env && process.env.MONGO_URL || undefined
+    MONGOTEST_URL: typeof globalThis !== 'undefined' && globalThis['MONGOTEST_URL'] || typeof process !== 'undefined' && process.env && process.env.MONGOTEST_URL || undefined
   }
 })
 
