@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/index.ts",
-    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest user.test.ts --verbose --coverage --detectOpenHandles",
+    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --verbose --coverage --detectOpenHandles",
     "generate-mongo": "pnpx prisma generate --schema=./prisma/mongo.prisma",
     "generate-postgres": "pnpx prisma generate --schema=./prisma/postgres.prisma",
     "migrate-postgres": "pnpx prisma migrate dev --schema=./prisma/postgres.prisma"

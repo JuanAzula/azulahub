@@ -51,6 +51,7 @@ async function createSeries(req: Request, res: Response) {
         releaseYear,
         poster_img,
         genresName,
+        authorEmail,
         score
     } = req.body
 
@@ -90,8 +91,13 @@ async function createSeries(req: Request, res: Response) {
             description,
             releaseYear,
             poster_img,
-            genresName,
-            score
+            genres: {
+                connect: { name: genresName }
+            },
+            score,
+            author: {
+                connect: { email: authorEmail }
+            }
         }
     })
     res.json(newSeries)
@@ -164,7 +170,7 @@ async function updateSeries(req: Request, res: Response) {
             return res.status(404).json({ error: 'series not found' })
         }
 
-        const updatedMovie = await prisma.series.update({
+        const updateSeries = await prisma.series.update({
             where: { id: id },
             data: {
                 title: title || series.title,
