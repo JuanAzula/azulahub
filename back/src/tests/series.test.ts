@@ -5,19 +5,16 @@ import { toMatchImageSnapshot } from 'jest-image-snapshot';
 
 expect.extend({ toMatchImageSnapshot });
 
-describe('movies petitions', () => {
-    test('getMovies', async () => {
-        const movies = await request(app).get('/api/movies')
+describe('series petitions', () => {
+    test('get all series', async () => {
+        const movies = await request(app).get('/api/series')
         expect(movies.status).toBe(200)
-
-        // const moviesResponse = JSON.parse(movies.text)
-        // expect(moviesResponse).toMatchImageSnapshot()
     })
-    test('getMovie', async () => {
-        const movie = await request(app).get('/api/movies/660d7fd6c0cee288fe57d605')
+    test('get one series', async () => {
+        const movie = await request(app).get('/api/series/660d7fd6c0cee288fe57d605')
         expect(movie.status).toBe(200)
     })
-    test('createMovie', async () => {
+    test('create a series', async () => {
         const mockRequest = {
             headers: {
                 Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzEyNTk4Nzg3LCJleHAiOjE3MTI2ODUxODd9.gFGKQbYZWs-QXjkTbmzwQwxCHh0Dl8u5kraCe46k7RM",
@@ -32,16 +29,7 @@ describe('movies petitions', () => {
                 authorEmail: "admin@example.com"
             },
         };
-        const movie = await request(app).post('/api/movies').set(mockRequest.headers).send(mockRequest.body)
-        expect(movie.status).toBe(200)
-    })
-    test('deleteMovie', async () => {
-        const mockRequest = {
-            headers: {
-                Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiaWF0IjoxNzEyNTk4Nzg3LCJleHAiOjE3MTI2ODUxODd9.gFGKQbYZWs-QXjkTbmzwQwxCHh0Dl8u5kraCe46k7RM",
-            },
-        }
-        const movie = await request(app).delete('/api/movies/660d7fd6c0cee288fe57d605').set(mockRequest.headers)
+        const movie = await request(app).post('/api/series').set(mockRequest.headers).send(mockRequest.body)
         expect(movie.status).toBe(200)
     })
 })
