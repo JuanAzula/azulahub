@@ -10,9 +10,7 @@ async function loginUser(req: Request, res: Response) {
     const { body } = req
     const { username: email, password } = body
     if (!email || !password) {
-        res.status(401).json({
-            error: 'invalid user or password'
-        })
+        console.error('invalid user or password')
         return
     }
     const user = await prisma.users.findUnique({
@@ -45,7 +43,7 @@ async function loginUser(req: Request, res: Response) {
             expiresIn: 60 * 60 * 24
         }
     )
-    console.log('login succesful')
+    console.log('login succesful', token)
     res.send({
         name: user.name,
         email: user.email,
@@ -66,7 +64,7 @@ async function validLogin(req: Request, res: Response) {
         res.status(200)
         console.log('login validated')
     } catch (error) {
-        res.send(201)
+        res.send(404)
     }
 }
 

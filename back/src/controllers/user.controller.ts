@@ -20,7 +20,7 @@ async function getUserById(req: Request, res: Response) {
 async function createUser(req: Request, res: Response) {
     const { body } = req
     const { email, name, password } = body
-    // console.log('entro en la petición post', email, name, password)
+    console.log('entro en la petición post', email, name, password)
     try {
 
         const saltRounds = 10
