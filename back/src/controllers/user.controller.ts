@@ -7,14 +7,24 @@ import { Request, Response } from 'express'
 
 async function getUser(_req: Request, res: Response) {
     console.log('entro en la petición get')
-    const users = await prisma.users.findMany()
-    res.json(users)
+    try {
+        const users = await prisma.users.findMany()
+        res.json(users)
+    } catch (err) {
+        console.error('Error getting user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 async function getUserById(req: Request, res: Response) {
-    const { id } = req.params
-    const user = await prisma.users.findUnique({ where: { id: id } })
-    res.json(user)
+    const { email } = req.body
+    try {
+        const user = await prisma.users.findUnique({ where: { email: email } })
+        res.json(user)
+    } catch (err) {
+        console.error('Error getting user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 async function createUser(req: Request, res: Response) {
@@ -44,9 +54,14 @@ async function createUser(req: Request, res: Response) {
 }
 
 async function deleteUser(req: Request, res: Response) {
-    const { id } = req.params
-    const user = await prisma.users.delete({ where: { id: id } })
-    res.json(user)
+    const { email } = req.body
+    try {
+        const user = await prisma.users.delete({ where: { email: email } })
+        res.json(user)
+    } catch (err) {
+        console.error('Error deleting user:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 export {
