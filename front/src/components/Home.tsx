@@ -25,9 +25,9 @@ export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
                     <p>{movie?.score}</p>
                     <p>{movie?.author.email}</p>
                     <p>{movie?.genres.name}</p>
-                    <button className="text-red-500" onClick={() => MovieService.deleteMovie(movie?.id, { token })}>Delete</button>
+                    <button data-testid={`delete${movie?.title}`} className="text-red-500" onClick={() => MovieService.deleteMovie(movie?.id, { token })}>Delete</button>
                     <br />
-                    <button className="text-blue-500" onClick={() => setCurrentMovie(movie)}>Edit</button>
+                    <button data-testid={`edit${movie?.title}`} className="text-blue-500" onClick={() => setCurrentMovie(movie)}>Edit</button>
                     <img onClick={() => setCurrentMovie(movie)} src={movie?.poster_img} alt="" style={{ width: '200px' }} />
                 </div>
             ))}
