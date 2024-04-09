@@ -17,14 +17,15 @@ test('create movie', async ({ page }) => {
     await page.getByPlaceholder('Genre').fill('action')
     await page.getByPlaceholder('Score').fill('8.9')
     const fileInput = await page.getByTestId('file-input');
-    await fileInput.setInputFiles(imagePath);
+    await fileInput.setInputFiles([
+        path.join(__dirname, 'pulp-fiction.webp'),
+    ]);
 
-    // Verificar que la imagen seleccionada es la correcta
     const selectedFile = await fileInput.inputValue();
     if (selectedFile === 'pulp-fiction.webp') {
-        console.log('La imagen se ha seleccionado correctamente.');
+        console.log('Selected file:', selectedFile);
     } else {
-        console.log('La imagen seleccionada no es la esperada.');
+        console.log('No selected file', selectedFile);
     } await page.waitForTimeout(5000)
     await page.getByTestId('upload-button').click()
     await page.getByRole('button', { name: 'Add' }).click()
