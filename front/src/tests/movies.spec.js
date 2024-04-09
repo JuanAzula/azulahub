@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test } from '@playwright/test'
 import { config } from 'dotenv'
 config()
 
@@ -38,6 +38,5 @@ test('update movie', async ({ page }) => {
 
 })
 test('delete movie', async ({ page }) => {
-    // await page.waitForTimeout(4000)
     await page.getByTestId('deletePulp Fiction 2').click()
 })
