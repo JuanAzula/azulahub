@@ -31,25 +31,31 @@ async function loginUser(req: Request, res: Response) {
         })
         return
     }
-    const userForToken = {
-        id: user._id,
-        email: user.email
-    }
+    try {
 
-    const token = jwt.sign(
-        userForToken,
-        process.env.SECRET ?? 'default-secret',
-        {
-            expiresIn: 60 * 60 * 24
+        const userForToken = {
+            id: user._id,
+            email: user.email
         }
-    )
-    console.log('login succesful', token)
-    res.send({
-        name: user.name,
-        email: user.email,
-        id: user._id,
-        token
-    })
+
+        const token = jwt.sign(
+            userForToken,
+            process.env.SECRET ?? 'default-secret',
+            {
+                expiresIn: 60 * 60 * 24
+            }
+        )
+        console.log('login succesful', token)
+        res.send({
+            name: user.name,
+            email: user.email,
+            id: user._id,
+            token
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).send({ error })
+    }
 }
 
 async function validLogin(req: Request, res: Response) {

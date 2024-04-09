@@ -51,9 +51,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
             const result = await UploadService.upload(file, { token });
             console.log('result from handleupload', result)
             setImg(result.url)
-            setTimeout(() => {
-                console.log('img', img)
-            }, 800)
+            console.log('img', img)
             alert('File uploaded successfully');
         } catch (error) {
             console.error('Error uploading file:', error);
@@ -127,8 +125,8 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
 
                 <div>
                     <label htmlFor="file">Poster image:</label>
-                    <input type="file" name="file" onChange={handleFileChange} />
-                    <span onClick={handleUpload} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm</span>
+                    <input type="file" name="file" data-testid="file-input" onChange={handleFileChange} />
+                    <span onClick={handleUpload} data-testid="upload-button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm</span>
                 </div>
                 <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
                 <button onClick={handleCancel} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
