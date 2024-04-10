@@ -16,6 +16,7 @@ import morgan from 'morgan';
 
 const app: Application = express()
 
+// Middlewares
 app.use(cors())
 app.options('*', cors())
 
@@ -23,16 +24,14 @@ app.use(responseTime())
 
 app.use(helmet());
 app.use(morgan('dev'))
-
-
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: "./uploads",
-    limits: { fileSize: 10000000 }, // 10MB max file(s) size
-    abortOnLimit: true // default: false (if true, files will not be uploaded and an error event will be emitted)
+    limits: { fileSize: 10000000 },
+    abortOnLimit: true
 }));
 
 // Load routes

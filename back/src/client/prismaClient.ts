@@ -29,7 +29,6 @@ const mongoConnectionString = process.env.NODE_ENV === "test" ? `${process.env.M
 
 
 export let prismaClient: any
-console.log(DATA_SOURCE)
 if (DATA_SOURCE === "postgres") {
     const connectionString = `${process.env.POSTGRES_URL}`
     const pool = new Pool({ connectionString })

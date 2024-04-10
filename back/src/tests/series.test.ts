@@ -1,4 +1,3 @@
-// import { getMovies } from "../controllers/movies.controller";
 import app from "../app.ts";
 import request from "supertest";
 import { toMatchImageSnapshot } from 'jest-image-snapshot';

@@ -6,12 +6,11 @@ import { Request, Response } from 'express'
 
 
 async function getMovies(_req: Request, res: Response) {
-  // const moviesInRedis = await redisClient.get('movies')
-  // if (moviesInRedis) {
-  //   console.log('moviesInRedis', moviesInRedis)
-  //   res.json(JSON.parse(moviesInRedis))
-  //   return
-  // }
+  const moviesInRedis = await redisClient.get('movies')
+  if (moviesInRedis) {
+    res.json(JSON.parse(moviesInRedis))
+    return
+  }
   const movies = await prisma.movies.findMany(
     {
       include: {
@@ -39,7 +38,6 @@ async function getMovie(req: Request, res: Response) {
 
   const movieInRedis = await redisClient.get('movies:' + id)
   if (movieInRedis) {
-    console.log('movieInRedis', movieInRedis)
     res.json(JSON.parse(movieInRedis))
     return
   }
@@ -66,7 +64,6 @@ async function createMovie(req: Request, res: Response) {
   } = req.body
 
   const authorization = req.get('authorization')
-  console.log('authorization', authorization)
   let token = null
 
   if (authorization && authorization.toLowerCase().startsWith('bearer')) {
@@ -78,13 +75,10 @@ async function createMovie(req: Request, res: Response) {
     return res.status(401).json({ error: 'No hay token' });
   }
   try {
-    console.log('token', token)
     if (!process.env.SECRET) {
       throw new Error('Missing SECRET environment variable');
     }
-    console.log('process.env.SECRET', process.env.SECRET)
     decodedToken = jwt.verify(token, process.env.SECRET)
-    console.log('decodedToken', decodedToken)
   } catch (err) {
     console.log(err)
     return res.status(401).json({ error: 'token missing blabla invalid' })
@@ -123,15 +117,14 @@ async function createMovie(req: Request, res: Response) {
     redisClient.expire('movies', 60 * 60 * 24);
 
     res.json(newMovie)
-  } catch (e) {
-    console.log('Error creating new movie', e)
+  } catch (err) {
+    console.log('Error creating new movie', err)
     res.status(500).json({ error: 'Error creating new movie' })
   }
 }
 
 async function deleteMovie(req: Request, res: Response) {
   const { id } = req.params
-  console.log('entro en delete movie', 'id')
 
   const authorization = req.get('authorization')
   let token = null
@@ -175,7 +168,6 @@ async function deleteMovie(req: Request, res: Response) {
 async function updateMovie(req: Request, res: Response) {
   const { id } = req.params
   const { title, description, releaseYear, poster_img, genresName, score } = req.body
-  console.log('entro en update movie', 'id', id)
   const authorization = req.get('authorization')
   let token = null
 
@@ -186,7 +178,6 @@ async function updateMovie(req: Request, res: Response) {
   if (!token || token === null) {
     return res.status(401).json({ error: 'token missing or invalid' })
   }
-  console.log('apunto de caerme')
   let decodedToken = {}
   if (!process.env.SECRET) {
     throw new Error('Missing SECRET environment variable');

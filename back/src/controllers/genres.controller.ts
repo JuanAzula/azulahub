@@ -44,7 +44,6 @@ async function getGenre(req: Request, res: Response) {
 
 async function deleteGenre(req: Request, res: Response) {
     const { name } = req.params
-    console.log(name)
     try {
         const genre = await prisma.genres.delete({
             where: {

@@ -18,7 +18,7 @@ describe('user petitions', () => {
     test('create a user', async () => {
         const mockRequest = {
 
-            body: { id: "5", email: "test@example.com", password: "test*", name: "tester", movies: [], series: [] }, // You can add a request body if needed
+            body: { id: "5", email: "test@example.com", password: "test*", name: "tester", movies: [], series: [] },
         };
         const user = await request(app).post('/api/users').send(mockRequest.body)
         expect(user.status).toBe(201)

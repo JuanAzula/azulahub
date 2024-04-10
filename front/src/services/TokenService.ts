@@ -13,15 +13,13 @@ class TokenService {
             const response = await axios.post(BASE_URL, { token });
 
             if (response.status === 200) {
-                console.log('Token is valid', response);
-                return true; // Token is valid
+                return true
             } else {
-                console.log('Token is invalid', response);
-                return false; // Token is invalid
+                return false
             }
         } catch (error) {
-            console.error('Error validating token:', error);
-            return false; // Error occurred while validating token
+            console.error('Error validating token:', error)
+            return false
         }
     }
 }

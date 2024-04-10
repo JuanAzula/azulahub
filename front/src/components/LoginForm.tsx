@@ -4,7 +4,6 @@ import LoginService from '../services/LoginService'
 import { TokenService } from '../services/TokenService'
 
 export const Login = () => {
-    // const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [passwordError, setPasswordError] = useState('')
     const [emailError, setEmailError] = useState('')
     const [username, setUsername] = useState('')
@@ -12,7 +11,6 @@ export const Login = () => {
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault()
-        console.log('LOGIN', username, password)
         try {
             const user = await LoginService.LoginUser({
                 username,
@@ -22,22 +20,12 @@ export const Login = () => {
             window.localStorage.setItem(
                 'LoggedUser', JSON.stringify(user)
             )
-            console.log('USER', user)
             TokenService.setToken(user.token)
-            console.log('USER TOKEN', user.token)
-            console.log('mecachis')
             setUsername('')
             setPassword('')
-            console.log('USER', user)
-            console.log('USER TOKEN', user.token)
-            console.log('Username', user.email)
             window.location.reload()
         } catch (e) {
-            // setErrorMessage('Wrong credentials')
-            console.log('no ha salido bien')
-            setTimeout(() => {
-                // setErrorMessage(null)
-            }, 5000)
+            console.log(e)
         }
     }
 

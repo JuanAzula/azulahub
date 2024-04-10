@@ -1,4 +1,3 @@
-// import { getMovies } from "../controllers/movies.controller";
 import app from "../app.ts";
 import request from "supertest";
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
@@ -10,6 +9,7 @@ describe('movies petitions', () => {
         const movies = await request(app).get('/api/movies')
         expect(movies.status).toBe(200)
 
+        // Snapshot test commented because we don`t really need it in the backend
         // const moviesResponse = JSON.parse(movies.text)
         // expect(moviesResponse).toMatchImageSnapshot()
     })

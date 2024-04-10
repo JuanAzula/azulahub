@@ -60,7 +60,6 @@ async function loginUser(req: Request, res: Response) {
 
 async function validLogin(req: Request, res: Response) {
     const { body } = req
-    console.log('body', body)
     const { token } = body
     try {
         if (!process.env.SECRET) {
@@ -68,7 +67,6 @@ async function validLogin(req: Request, res: Response) {
         }
         jwt.verify(token, process.env.SECRET)
         res.status(200)
-        console.log('login validated')
     } catch (error) {
         res.send(404)
     }

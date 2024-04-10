@@ -24,9 +24,7 @@ const getUser = () => {
 
 const getMovies = async () => {
     const movies = await MovieService.getMovies()
-    console.log('movies', movies)
     if (movies === null) {
-        console.log('no movies')
         setTimeout(() => {
             getMovies()
         }, 2500)
@@ -38,7 +36,6 @@ const getMovies = async () => {
 const getSeries = async () => {
     const series = await SeriesService.getSeries()
     if (series === null) {
-        console.log('no movies')
         setTimeout(() => {
             getSeries()
         }, 2500)
@@ -53,24 +50,22 @@ export const AppRoutes = () => {
         queryKey: ['userLogged'],
         queryFn: async () => getUser()
     })
-    console.log(queryUserLogged.data)
 
     const queryMovies = useQuery({
         queryKey: ['movies'],
         queryFn: async () => getMovies()
     })
-    console.log(queryMovies.data)
 
     const querySeries = useQuery({
         queryKey: ['series'],
         queryFn: async () => getSeries()
     })
-    console.log(querySeries.data)
 
 
     const [user, setUser] = useState<User | null>(null)
-    console.log(user)
-
+    if (!user && queryUserLogged.data) {
+        setUser(queryUserLogged.data)
+    }
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('LoggedUser')
         if (loggedUserJSON) {
@@ -80,12 +75,10 @@ export const AppRoutes = () => {
             let count = 0
             const checkTokenValidity = async () => {
                 const isValidToken = await TokenService.validateToken(user.token);
-                console.log('isValidToken', isValidToken)
                 if (isValidToken) {
                     count = 0
                 }
                 else if (!isValidToken && count < 1) {
-                    // Token is invalid, perform logout action
                     count += 1
                     setTimeout(() => {
                         checkTokenValidity()
@@ -95,12 +88,10 @@ export const AppRoutes = () => {
                     HandleLogout();
                 }
             };
-            console.log('checkTokenValidity', user.token)
             checkTokenValidity();
         }
     }, [])
 
-    // const navigate = useNavigate()
 
     const HandleLogout = () => {
         window.localStorage.removeItem('LoggedUser')

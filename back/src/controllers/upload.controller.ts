@@ -11,7 +11,6 @@ interface CustomRequest extends Request {
 
 async function postFile(req: CustomRequest | Request, res: Response) {
     const authorization = req.get('authorization')
-    console.log('authorization in upload', authorization)
     let token = null
 
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
@@ -23,13 +22,10 @@ async function postFile(req: CustomRequest | Request, res: Response) {
         return res.status(401).json({ error: 'No hay token' });
     }
     try {
-        console.log('token', token)
         if (!process.env.SECRET) {
             throw new Error('Missing SECRET environment variable');
         }
-        console.log('process.env.SECRET', process.env.SECRET)
         decodedToken = jwt.verify(token, process.env.SECRET)
-        console.log('decodedToken', decodedToken)
     } catch (err) {
         console.log(err)
         return res.status(401).json({ error: 'token missing blabla invalid' })
@@ -45,9 +41,7 @@ async function postFile(req: CustomRequest | Request, res: Response) {
         }
 
         const result = await cloudinary.uploader.upload(file.tempFilePath);
-        console.log('result', result)
         await fs.unlink(file.tempFilePath);
-        console.log('tras fs')
         res.status(200).json({ url: result.secure_url });
     } catch (err) {
         console.error(err);

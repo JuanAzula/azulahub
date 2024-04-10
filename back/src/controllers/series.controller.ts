@@ -8,7 +8,6 @@ import { Request, Response } from 'express'
 async function getSeries(_req: Request, res: Response) {
     const seriesInRedis = await redisClient.get('series')
     if (seriesInRedis) {
-        console.log('seriesInRedis', seriesInRedis)
         res.json(JSON.parse(seriesInRedis))
         return
     }
@@ -56,7 +55,6 @@ async function createSeries(req: Request, res: Response) {
     } = req.body
 
     const authorization = req.get('authorization')
-    console.log('authorization', authorization)
     let token = null
 
     if (authorization && authorization.toLowerCase().startsWith('bearer')) {
@@ -68,13 +66,10 @@ async function createSeries(req: Request, res: Response) {
         return res.status(401).json({ error: 'No hay token' });
     }
     try {
-        console.log('token', token)
         if (!process.env.SECRET) {
             throw new Error('Missing SECRET environment variable');
         }
-        console.log('process.env.SECRET', process.env.SECRET)
         decodedToken = jwt.verify(token, process.env.SECRET)
-        console.log('decodedToken', decodedToken)
     } catch (err) {
         console.log(err)
         return res.status(401).json({ error: 'token missing blabla invalid' })
@@ -105,7 +100,6 @@ async function createSeries(req: Request, res: Response) {
 
 async function deleteSeries(req: Request, res: Response) {
     const { id } = req.params
-    console.log('entro en delete movie', 'id')
 
     const authorization = req.get('authorization')
     let token = null

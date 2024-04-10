@@ -7,7 +7,6 @@ import { useQueryClient } from '@tanstack/react-query';
 
 
 export const MovieForm = (currentMovie: any, setMovie: any) => {
-    console.log('movie in movieform', currentMovie)
     const [file, setFile] = useState<File | null>(currentMovie?.movie?.file || null);
     const [title, setTitle] = useState(currentMovie?.movie?.title || '');
     const [description, setDescription] = useState(currentMovie?.movie?.description || '');
@@ -29,7 +28,6 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
         setGenre(currentMovie?.movie?.genresId || '')
         setScore(currentMovie?.movie?.score || '0')
     }, [currentMovie])
-    console.log('img', currentMovie?.movie?.poster_img)
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -49,9 +47,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 return;
             }
             const result = await UploadService.upload(file, { token });
-            console.log('result from handleupload', result)
             setImg(result.url)
-            console.log('img', img)
             alert('File uploaded successfully');
         } catch (error) {
             console.error('Error uploading file:', error);

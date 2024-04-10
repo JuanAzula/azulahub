@@ -9,8 +9,6 @@ datasource db {
     url      = env("MONGOTEST_URL")
 }
 
-// schema.prisma
-
 model Users {
     id       String   @id @default(auto()) @map("_id") @db.ObjectId
     email    String   @unique

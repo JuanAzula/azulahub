@@ -12,19 +12,18 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ user, movies, series }) => {
     const [currentMovie, setCurrentMovie] = useState(null)
 
-    console.log('currentMovie', movies)
     return (
         <div>
-            <h1 className="text-2xl text-green-500" >{user.name}</h1>
-            <h2>{user.email}</h2>
+            <h1 className="text-2xl text-green-500" >{user?.name}</h1>
+            <h2>{user?.email}</h2>
             {movies?.map((movie: any) => (
                 <div key={movie?.id}>
                     <h2 >{movie?.title}</h2>
                     <p>{movie?.description}</p>
                     <p>{movie?.releaseYear}</p>
                     <p>{movie?.score}</p>
-                    <p>{movie?.author.email}</p>
-                    <p>{movie?.genres.name}</p>
+                    <p>{movie?.author?.email}</p>
+                    <p>{movie?.genres?.name}</p>
                     <button data-testid={`delete${movie?.title}`} className="text-red-500" onClick={() => MovieService.deleteMovie(movie?.id, { token })}>Delete</button>
                     <br />
                     <button data-testid={`edit${movie?.title}`} className="text-blue-500" onClick={() => setCurrentMovie(movie)}>Edit</button>

@@ -20,11 +20,6 @@ describe('genres petitions', () => {
         expect(genre.status).toBe(200)
     })
     test('delete a genre', async () => {
-        // const mockRequest = {
-        //     body: {
-        //         name: "action"
-        //     }
-        // }
         const genre = await request(app).delete('/api/genres/action')
         expect(genre.status).toBe(200)
     })

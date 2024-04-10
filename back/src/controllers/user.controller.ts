@@ -6,7 +6,6 @@ import { Request, Response } from 'express'
 
 
 async function getUser(_req: Request, res: Response) {
-    console.log('entro en la petición get')
     try {
         const users = await prisma.users.findMany()
         res.json(users)
@@ -30,12 +29,10 @@ async function getUserById(req: Request, res: Response) {
 async function createUser(req: Request, res: Response) {
     const { body } = req
     const { email, name, password } = body
-    console.log('entro en la petición post', email, name, password)
     try {
 
         const saltRounds = 10
         const passwordHash = await bcrypt.hash(password, saltRounds)
-        console.log('passwordHash', passwordHash)
         const newUser = await prisma.users.create({
             data: {
                 email,
