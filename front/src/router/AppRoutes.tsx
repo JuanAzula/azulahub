@@ -7,6 +7,7 @@ import '../styles/App.css'
 import { TokenService } from '../services/TokenService'
 import { Login } from "../components/LoginForm"
 import { Home } from "../components/Home"
+import { Signup } from "../components/SignupForm"
 
 
 
@@ -103,13 +104,6 @@ export const AppRoutes = () => {
     return (
         <BrowserRouter>
             <button className="text-2xl text-green-500 absolute top-0 right-0 mt-4 mr-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={HandleLogout}>Logout</button>
-            {queryUserLogged.data
-                ? (
-                    <>
-
-                    </>
-                )
-                : null}
             <Routes>
                 <Route
                     path="/"
@@ -135,23 +129,18 @@ export const AppRoutes = () => {
                             )
                     }
                 />
-                {/* <Route path="/tracks/:trackId" element={<SongPage />} /> */}
-                {/* <Route path="/search" element={<SearchPage />} />
-        <Route path="/library" element={<LibraryPage />} />
-        <Route path="/library/playlists" element={<PlaylistPage />} />
-        <Route path="/library/favtracks" element={<FavTracks/>} /> */}
-                {/* <Route
-                    path="/user"
-                    element={<UserPage user={queryUserLogged.data} />}
-                /> */}
-                {/* <Route
-                    path="/profile"
-                    element={<UserPage user={queryUserLogged.data} />}
-                /> */}
-                {/* <Route
-          path="/signup"
-          element={<Signup triggerRefetch={handleLoginSuccess} />}
-        /> */}
+                <Route
+                    path="/signup"
+                    element={
+                        queryUserLogged.data
+                            ? (
+                                <Home user={queryUserLogged.data} movies={queryMovies.data} series={querySeries.data} />
+                            )
+                            : (
+                                <Signup />
+                            )
+                    }
+                />
             </Routes>
         </BrowserRouter>
     )

@@ -40,9 +40,31 @@ async function createUser(req: Request, res: Response) {
                 password: passwordHash
             }
         })
+        const user = await prisma.users.findUnique({
+            where: {
+                email: email
+            }
+        })
 
+        const userForToken = {
+            id: user?._id,
+            email
+        }
 
-        res.status(201).json(newUser)
+        const token = jwt.sign(
+            userForToken,
+            process.env.SECRET ?? 'default-secret',
+            {
+                expiresIn: 60 * 60 * 24
+            }
+        )
+        console.log('login succesful', token)
+        res.send({
+            name,
+            email,
+            id: user?._id,
+            token
+        })
     }
     catch (err) {
         console.error('Error creating user:', err);
