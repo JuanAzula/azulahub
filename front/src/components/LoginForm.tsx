@@ -84,7 +84,7 @@ export const Login = () => {
 
                 <form onSubmit={handleLogin} className="login-form">
                     <input
-                        className="login-input"
+                        className="login-input text-black"
                         type="text"
                         value={username}
                         id="email"
@@ -92,7 +92,7 @@ export const Login = () => {
                         onChange={handleUsernameInputChange}
                     />
                     <input
-                        className="login-input"
+                        className="login-input text-black"
                         type="password"
                         value={password}
                         id="password"

@@ -207,14 +207,16 @@ async function updateMovie(req: Request, res: Response) {
         score: score || movie.score
       }
     })
-    const movies = await redisClient.get('movies')
-    if (!movies) {
-      return
-    }
-    const moviesUpdated = JSON.parse(movies).filter((movie: { id: string }) => movie.id !== id)
-    moviesUpdated.push(updatedMovie)
-    await redisClient.set('movies', JSON.stringify(moviesUpdated))
-    res.json(updatedMovie)
+    const movies = await prisma.movies.findMany(
+      {
+        include: {
+          author: true,
+          genres: true
+        }
+      }
+    )
+    await redisClient.set('movies', JSON.stringify(movies))
+    redisClient.expire('movies', 60 * 60 * 24);
   }
   catch (err) {
     console.log('error updating movie from redis', err)
