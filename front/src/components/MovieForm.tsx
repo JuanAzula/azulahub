@@ -3,6 +3,7 @@ import { UploadService } from "../services/UploadService"
 import { token } from "../services/TokenService";
 import { MovieService } from "../services/MovieService";
 import { useQueryClient } from '@tanstack/react-query';
+import { Toaster, toast } from 'sonner';
 
 
 
@@ -39,8 +40,8 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
         setMovie(null);
     };
 
-    const handleUpload = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleUpload: any = async (event: React.FormEvent) => {
+        // event.preventDefault();
         try {
             if (!file) {
                 console.error('No file selected');
@@ -49,6 +50,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
             const result = await UploadService.upload(file, { token });
             setImg(result.url)
             alert('File uploaded successfully');
+            return result
         } catch (error) {
             console.error('Error uploading file:', error);
         }
@@ -68,6 +70,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 score: parseFloat(score || '0')
             }
             MovieService.patchMovie(movie, { token })
+            toast.success('Movie updated')
             setTimeout(() => {
                 window.location.reload()
             }, 250)
@@ -83,6 +86,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 score: parseFloat(score || '0')
             };
             MovieService.postMovie(movie, { token })
+            toast.success('Movie added')
             setTimeout(() => {
                 window.location.reload()
             }, 250)
@@ -122,11 +126,30 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
                 <div>
                     <label htmlFor="file">Poster image:</label>
                     <input type="file" name="file" data-testid="file-input" onChange={handleFileChange} />
-                    <span onClick={handleUpload} data-testid="upload-button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Confirm</span>
+                    <span
+                        onClick={() => {
+                            toast.promise(
+                                new Promise<any>((resolve, reject) => {
+                                    handleUpload()
+                                        .then(setTimeout(() => resolve({}), 3000))
+                                        .catch(reject);
+                                }), {
+                                loading: 'Adding image...',
+                                success: 'Image added!',
+                                error: 'Could not add Image'
+                            }
+                            )
+                        }}
+                        data-testid="upload-button"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Confirm
+                    </span>
                 </div>
                 <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add</button>
                 <button onClick={handleCancel} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
             </form>
+            <Toaster />
         </div>
     )
 }

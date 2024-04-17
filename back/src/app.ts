@@ -12,6 +12,8 @@ import uploadRoutes from './routes/upload.routes.ts'
 import genresRoutes from './routes/genres.routes.ts'
 import helmet from 'helmet';
 import morgan from 'morgan';
+import { ExpressAuth } from "@auth/express"
+import GitHub from "@auth/express/providers/github"
 
 
 const app: Application = express()
@@ -21,7 +23,6 @@ app.use(cors())
 app.options('*', cors())
 
 app.use(responseTime())
-
 app.use(helmet());
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))
@@ -33,6 +34,8 @@ app.use(fileUpload({
     limits: { fileSize: 10000000 },
     abortOnLimit: true
 }));
+app.set("trust proxy", true)
+app.use("/auth/*", ExpressAuth({ providers: [GitHub] }))
 
 // Load routes
 app.use('/api', categoriesRoutes)

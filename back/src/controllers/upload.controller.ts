@@ -28,7 +28,7 @@ async function postFile(req: CustomRequest | Request, res: Response) {
         decodedToken = jwt.verify(token, process.env.SECRET)
     } catch (err) {
         console.log(err)
-        return res.status(401).json({ error: 'token missing blabla invalid' })
+        return res.status(401).json({ error: 'token missing invalid' })
     }
 
     if (!decodedToken) {

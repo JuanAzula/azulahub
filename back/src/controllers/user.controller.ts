@@ -58,7 +58,6 @@ async function createUser(req: Request, res: Response) {
                 expiresIn: 60 * 60 * 24
             }
         )
-        console.log('login succesful', token)
         res.send({
             name,
             email,
