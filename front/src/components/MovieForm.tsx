@@ -40,8 +40,7 @@ export const MovieForm = (currentMovie: any, setMovie: any) => {
         setMovie(null);
     };
 
-    const handleUpload: any = async (event: React.FormEvent) => {
-        // event.preventDefault();
+    const handleUpload: any = async () => {
         try {
             if (!file) {
                 console.error('No file selected');
