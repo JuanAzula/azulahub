@@ -103,7 +103,7 @@ export const AppRoutes = () => {
 
     return (
         <BrowserRouter>
-            <button className="text-2xl text-green-500 absolute top-0 right-0 mt-4 mr-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={HandleLogout}>Logout</button>
+            <button className="text-2xl  absolute top-0 right-0 mt-4 mr-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={HandleLogout}>Logout</button>
             <Routes>
                 <Route
                     path="/"
