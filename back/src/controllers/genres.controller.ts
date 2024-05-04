@@ -1,3 +1,4 @@
+import { redisClient } from '../client/redisClient.ts'
 import { prismaClient as prisma } from '../client/prismaClient.ts'
 import { Request, Response } from 'express'
 
@@ -18,8 +19,19 @@ async function createGenre(req: Request, res: Response) {
 }
 
 async function getGenres(_req: Request, res: Response) {
+    const genresInRedis = await redisClient.get('genres')
+    if (genresInRedis) {
+        res.json(JSON.parse(genresInRedis))
+    }
     try {
         const genres = await prisma.genres.findMany()
+        try {
+            await redisClient.set('genres', JSON.stringify(genres))
+            redisClient.expire('genres', 60 * 60 * 24);
+        }
+        catch (err) {
+            console.log('error storing genres in redis', err)
+        }
         res.json(genres)
     } catch (err) {
         console.error('Error getting genres:', err);

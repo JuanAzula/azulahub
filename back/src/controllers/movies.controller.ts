@@ -63,31 +63,6 @@ async function createMovie(req: Request, res: Response) {
     score
   } = req.body
 
-  const authorization = req.get('authorization')
-  let token = null
-
-  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-    token = authorization.substring(7)
-  }
-
-  let decodedToken = {}
-  if (!token) {
-    return res.status(401).json({ error: 'No hay token' });
-  }
-  try {
-    if (!process.env.SECRET) {
-      throw new Error('Missing SECRET environment variable');
-    }
-    decodedToken = jwt.verify(token, process.env.SECRET)
-  } catch (err) {
-    console.log(err)
-    return res.status(401).json({ error: 'token missing blabla invalid' })
-  }
-
-  if (!decodedToken) {
-    return res.status(401).json({ error: 'decoded token missing' })
-  }
-
   try {
 
     const newMovie = await prisma.movies.create({
@@ -126,28 +101,6 @@ async function createMovie(req: Request, res: Response) {
 async function deleteMovie(req: Request, res: Response) {
   const { id } = req.params
 
-  const authorization = req.get('authorization')
-  let token = null
-
-  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-    token = authorization.substring(7)
-  }
-  if (!token || token === null) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
-  let decodedToken = {}
-  try {
-    if (!process.env.SECRET) {
-      throw new Error('Missing SECRET environment variable');
-    }
-    decodedToken = jwt.verify(token, process.env.SECRET)
-  } catch (err) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
-
-  if (!token || !decodedToken) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
 
   const movie = await prisma.movies.delete({ where: { id: id } })
   res.json(movie)
@@ -168,28 +121,6 @@ async function deleteMovie(req: Request, res: Response) {
 async function updateMovie(req: Request, res: Response) {
   const { id } = req.params
   const { title, description, releaseYear, poster_img, genresName, score } = req.body
-  const authorization = req.get('authorization')
-  let token = null
-
-  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-    token = authorization.substring(7)
-  }
-
-  if (!token || token === null) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
-  let decodedToken = {}
-  if (!process.env.SECRET) {
-    throw new Error('Missing SECRET environment variable');
-  }
-  try {
-    decodedToken = jwt.verify(token, process.env.SECRET)
-  } catch (err) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
-  if (!token || !decodedToken) {
-    return res.status(401).json({ error: 'token missing or invalid' })
-  }
   try {
     const movie = await prisma.movies.findUnique({ where: { id: id } })
     if (!movie) {

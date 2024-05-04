@@ -101,30 +101,6 @@ async function createSeries(req: Request, res: Response) {
 async function deleteSeries(req: Request, res: Response) {
     const { id } = req.params
 
-    const authorization = req.get('authorization')
-    let token = null
-
-    if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-        token = authorization.substring(7)
-    }
-    if (!token || token === null) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-
-    let decodedToken = {}
-    try {
-        if (!process.env.SECRET) {
-            throw new Error('Missing SECRET environment variable');
-        }
-        decodedToken = jwt.verify(token, process.env.SECRET)
-    } catch (err) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-
-    if (!token || !decodedToken) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-
     const series = await prisma.series.delete({ where: { id: id } })
     res.json(series)
 }
@@ -132,30 +108,6 @@ async function deleteSeries(req: Request, res: Response) {
 async function updateSeries(req: Request, res: Response) {
     const { id } = req.params
     const { title, description, releaseYear, poster_img, genresName, score } = req.body
-
-    const authorization = req.get('authorization')
-    let token = null
-
-    if (authorization && authorization.toLowerCase().startsWith('bearer')) {
-        token = authorization.substring(7)
-    }
-    if (!token || token === null) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-
-    let decodedToken = {}
-    try {
-        if (!process.env.SECRET) {
-            throw new Error('Missing SECRET environment variable');
-        }
-        decodedToken = jwt.verify(token, process.env.SECRET)
-    } catch (err) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
-
-    if (!token || !decodedToken) {
-        return res.status(401).json({ error: 'token missing or invalid' })
-    }
 
     try {
         const series = await prisma.series.findUnique({ where: { id: id } })
