@@ -22,6 +22,7 @@ async function getGenres(_req: Request, res: Response) {
     const genresInRedis = await redisClient.get('genres')
     if (genresInRedis) {
         res.json(JSON.parse(genresInRedis))
+        return
     }
     try {
         const genres = await prisma.genres.findMany()

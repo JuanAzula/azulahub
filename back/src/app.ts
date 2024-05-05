@@ -6,10 +6,11 @@ import responseTime from 'response-time'
 import categoriesRoutes from './routes/categories.routes.ts'
 import seriesRoutes from './routes/series.routes.ts'
 import moviesRoutes from './routes/movies.routes.ts'
-import loginRoutes from './routes/login.route.ts'
+import loginRoutes from './routes/login.routes.ts'
 import userRoutes from './routes/user.routes.ts'
 import uploadRoutes from './routes/upload.routes.ts'
 import genresRoutes from './routes/genres.routes.ts'
+import searchRoutes from './routes/search.routes.ts'
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { ExpressAuth } from "@auth/express"
@@ -45,5 +46,6 @@ app.use('/api', loginRoutes)
 app.use('/api', userRoutes)
 app.use('/api', uploadRoutes)
 app.use('/api', genresRoutes)
+app.use('/api', searchRoutes)
 
 export default app

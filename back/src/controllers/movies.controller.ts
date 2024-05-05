@@ -36,11 +36,11 @@ async function getMovies(_req: Request, res: Response) {
 async function getMovie(req: Request, res: Response) {
   const { id } = req.params
 
-  const movieInRedis = await redisClient.get('movies:' + id)
-  if (movieInRedis) {
-    res.json(JSON.parse(movieInRedis))
-    return
-  }
+  // const movieInRedis = await redisClient.get('movies:' + id)
+  // if (movieInRedis) {
+  //   res.json(JSON.parse(movieInRedis))
+  //   return
+  // }
 
   const movie = await prisma.movies.findUnique({
     where: { id: id },
