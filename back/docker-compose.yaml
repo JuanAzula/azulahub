@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  back:
+    build: .
+    ports:
+      - "3333:3333"
+    networks:
+      - mynetwork
+    depends_on:
+      - redis
+      # - mongo
+    environment:
+      - NODE_ENV=development
+      - MONGO_URL=mongodb+srv://juanazula3:MongoMiduJuan2313@cluster001.3lm3uhd.mongodb.net/movies001?retryWrites=true&w=majority
+      - REDIS_URL=redis://redis:6379
+      - MONGOTEST_URL="mongodb+srv://juanazula3:MongoMiduJuan2313@cluster001.3lm3uhd.mongodb.net/movies001-test?retryWrites=true&w=majority"
+      - SECRET="alapasepacadiamantepalfree"
+      - TOKEN= "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTA1MDAzNDMsImV4cCI6MTcxMTEwNTE0M30.8ysBeFJ_IOQkX0Cf7xkIsmL16ZvOiGRMuaI4TfTdxGE"
+      - CLOUDINARY_NAME ="dgtamgaup"
+      - CLOUDINARY_API_KEY = "527896527354184"
+      - CLOUDINARY_API_SECRET = "VS7lxtStITZUOzDmO_cDY7sZyAo"
+      - REDIS_HOST = "redis"
+      - REDIS_PORT = 6379
+      - PORT=3333
+  # mongo:
+  #   image: mongo:latest
+  #   ports:
+  #     - "27017:27017"
+  #   networks:
+  #     - mynetwork
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+    # volumes:
+    #   - redis-data:/data
+networks: 
+  mynetwork:
+    external: true
+# volumes:
+#   redis-data:

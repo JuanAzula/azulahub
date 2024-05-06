@@ -143,7 +143,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/juanazula/dev/azulahub/back/prisma/generated/mongo_client",
+      "value": "/Users/juanazula/dev/azulaplus-back/back/prisma/generated/mongo_client",
       "fromEnvVar": null
     },
     "config": {
@@ -154,6 +154,10 @@ const config = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "linux-arm64-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -179,8 +183,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = []\n    output          = \"./generated/mongo_client\"\n}\n\ndatasource db {\n    provider = \"mongodb\"\n    url      = env(\"MONGOTEST_URL\")\n}\n\n// schema.prisma\n\nmodel Users {\n    id       String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    email    String   @unique\n    password String\n    name     String\n    movies   Movies[]\n    series   Series[]\n}\n\nmodel Movies {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Series {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Genres {\n    id     String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    name   String   @unique\n    movies Movies[]\n    Series Series[]\n}\n",
-  "inlineSchemaHash": "4c5c75f17ab40138d7d34f1a1d34240382ccdf021550d40d4a7a3fb5074b7e76",
+  "inlineSchema": "generator client {\n    provider        = \"prisma-client-js\"\n    previewFeatures = []\n    binaryTargets   = [\"native\", \"linux-arm64-openssl-3.0.x\"]\n\n    output = \"./generated/mongo_client\"\n}\n\ndatasource db {\n    provider = \"mongodb\"\n    url      = env(\"MONGOTEST_URL\")\n}\n\nmodel Users {\n    id       String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    email    String   @unique\n    password String\n    name     String\n    movies   Movies[]\n    series   Series[]\n}\n\nmodel Movies {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Series {\n    id          String @id @default(auto()) @map(\"_id\") @db.ObjectId\n    title       String\n    description String\n    releaseYear Int\n    poster_img  String\n    genres      Genres @relation(fields: [genresName], references: [name])\n    genresName  String\n    score       Float\n    authorEmail String\n    author      Users  @relation(fields: [authorEmail], references: [email])\n}\n\nmodel Genres {\n    id     String   @id @default(auto()) @map(\"_id\") @db.ObjectId\n    name   String   @unique\n    movies Movies[]\n    Series Series[]\n}\n",
+  "inlineSchemaHash": "86b9b092e55e6924f17c67031c5ac47255bdb156133655ee0717a2a0d8b7620d",
   "copyEngine": true
 }
 
@@ -220,6 +224,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-darwin-arm64.dylib.node");
 path.join(process.cwd(), "prisma/generated/mongo_client/libquery_engine-darwin-arm64.dylib.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-linux-arm64-openssl-3.0.x.so.node");
+path.join(process.cwd(), "prisma/generated/mongo_client/libquery_engine-linux-arm64-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/generated/mongo_client/schema.prisma")

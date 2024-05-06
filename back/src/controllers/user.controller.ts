@@ -51,18 +51,31 @@ async function createUser(req: Request, res: Response) {
             email
         }
 
-        const token = jwt.sign(
+        const accessToken = jwt.sign(
             userForToken,
-            process.env.SECRET ?? 'default-secret',
-            {
-                expiresIn: 60 * 60 * 24
-            }
+            process.env.SECRET!,
+            { expiresIn: '2m' }
         )
+
+        const refreshToken = jwt.sign(
+            userForToken,
+            process.env.REFRESH_SECRET!,
+            { expiresIn: '1h' }
+        )
+        try {
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,
+                maxAge: 100000,
+                sameSite: 'lax'
+            })
+        } catch (error) {
+            console.log(error)
+        }
         res.send({
             name,
             email,
             id: user?._id,
-            token
+            token: accessToken
         })
     }
     catch (err) {

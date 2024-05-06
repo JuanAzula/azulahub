@@ -38,19 +38,33 @@ async function loginUser(req: Request, res: Response) {
             email: user.email
         }
 
-        const token = jwt.sign(
+        const accessToken = jwt.sign(
             userForToken,
-            process.env.SECRET ?? 'default-secret',
-            {
-                expiresIn: 60 * 60 * 24
-            }
+            process.env.SECRET!,
+            { expiresIn: '30s' }
         )
-        console.log('login succesful', token)
+
+        const refreshToken = jwt.sign(
+            userForToken,
+            process.env.REFRESH_SECRET!,
+            { expiresIn: '1h' }
+        )
+        try {
+            res.cookie('refreshToken', refreshToken, {
+                httpOnly: true,
+                maxAge: 1000000,
+                sameSite: 'lax',
+                secure: true
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        console.log('login successful', accessToken)
         res.send({
             name: user.name,
             email: user.email,
             id: user._id,
-            token
+            token: accessToken
         })
     } catch (error) {
         console.error(error)

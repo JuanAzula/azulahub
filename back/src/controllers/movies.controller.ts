@@ -6,11 +6,11 @@ import { Request, Response } from 'express'
 
 
 async function getMovies(_req: Request, res: Response) {
-  const moviesInRedis = await redisClient.get('movies')
-  if (moviesInRedis) {
-    res.json(JSON.parse(moviesInRedis))
-    return
-  }
+  // const moviesInRedis = await redisClient.get('movies')
+  // if (moviesInRedis) {
+  //   res.json(JSON.parse(moviesInRedis))
+  //   return
+  // }
   const movies = await prisma.movies.findMany(
     {
       include: {

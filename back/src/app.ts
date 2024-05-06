@@ -3,6 +3,7 @@ import { env } from 'process'
 import fileUpload from 'express-fileupload';
 import cors from 'cors'
 import responseTime from 'response-time'
+import cookieParser from 'cookie-parser'
 import categoriesRoutes from './routes/categories.routes.ts'
 import seriesRoutes from './routes/series.routes.ts'
 import moviesRoutes from './routes/movies.routes.ts'
@@ -28,6 +29,8 @@ app.use(helmet());
 app.use(morgan('dev'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+app.use(cookieParser())
+
 
 app.use(fileUpload({
     useTempFiles: true,
