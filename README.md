@@ -2,7 +2,7 @@ Azulahub README
 
 Overview
 
-Welcome to the project! This application is divided into two main parts: the backend (located in the back folder) and the frontend (located in the front folder). The backend serves as the core functionality provider, handling data management, authentication, and other server-side operations. Meanwhile, the frontend is responsible for providing the user interface and interacting with the backend to deliver a seamless user experience.
+Welcome to the project! This application is divided into two main parts; the backend (located in the back folder) and the frontend (located in the front folder). The backend serves as the core functionality provider, handling data management, authentication, and other server-side operations. Meanwhile, the frontend is responsible for providing the user interface and interacting with the backend to deliver a seamless user experience.
 
 Technologies Used
 
